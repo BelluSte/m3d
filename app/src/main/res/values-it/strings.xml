@@ -9,4 +9,6 @@
     <string name="nessuna_medicina_in_archivio">Nessuna medicina in archivio</string>
     <string name="armadietto_delle_medicine_vuoto">Armadietto delle medicine vuoto</string>
     <string name="al_momento_non_stai_assumendo_medicine">Al momento non stai assumendo medicine</string>
+    <string name="completa_tutti_campi">Completa correttamente tutti i campi</string>
+    <string name="nessuna_nota">Nessuna nota</string>
 </resources>

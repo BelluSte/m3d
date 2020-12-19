@@ -10,5 +10,7 @@
     <string name="al_momento_non_stai_assumendo_medicine">You are not taking medicines</string>
     <string name="armadietto_delle_medicine_vuoto">Medicine locker is empty</string>
     <string name="nessuna_medicina_in_archivio">No medicine on archive</string>
-    <string name="add_medicine">add medicine</string>
+    <string name="add_medicine" translatable="false">add medicine</string>
+    <string name="completa_tutti_campi">Missing fields</string>
+    <string name="nessuna_nota">No memo</string>
 </resources>
