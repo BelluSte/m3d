@@ -1,19 +1,18 @@
 package belluste.medicine;
 
-import androidx.annotation.StringRes;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.util.Log;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -21,11 +20,16 @@ import belluste.medicine.model.Medicina;
 
 public class AddActivity extends AppCompatActivity {
 
+    public static final String EXTRA_MEDICINA = "belluste.medicine.medicina";
+
     private Calendar myCalendar;
     private EditText etScad, etNome, etNote, etNum, etCont;
-    private CheckBox cbCompres, cbBust, cbCrema, cbScir, cbVari;
+    private RadioButton rbCompres, rbBust, rbCrema, rbScir, rbVari;
+    private RadioGroup rgType;
     private Button btnAnnulla, btnOK;
     private boolean quantVer;
+    private Intent replyIntent;
+    private int t = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,83 +37,131 @@ public class AddActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add);
 
         initUI();
+        replyIntent = new Intent();
+
         myCalendar = Calendar.getInstance();
 
-        DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                myCalendar.set(Calendar.YEAR, year);
-                myCalendar.set(Calendar.MONTH, month);
-                myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                updateLabel();
-            }
+        DatePickerDialog.OnDateSetListener date = (view, year, month, dayOfMonth) -> {
+            myCalendar.set(Calendar.YEAR, year);
+            myCalendar.set(Calendar.MONTH, month);
+            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            updateLabel();
         };
 
-        etScad.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {new DatePickerDialog(AddActivity.this, date,
+        etScad.setOnClickListener(v -> new DatePickerDialog(AddActivity.this, date,
                     myCalendar.get(Calendar.YEAR),
                     myCalendar.get(Calendar.MONTH),
-                    myCalendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
-        });
+                    myCalendar.get(Calendar.DAY_OF_MONTH)).show());
 
-        btnAnnulla.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-        btnOK.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (etNome.getText().length()<=1) {
-                    incompleto();
-                    return;
+        rgType.setOnCheckedChangeListener((group, checkedId) -> {
+            if (checkedId==rbCompres.getId()) {
+                if (!etCont.isEnabled()) {
+                    etCont.setEnabled(true);
                 }
+                t = 1;
+                quantVer = true;
+            } else if (checkedId==rbBust.getId()) {
+                if (!etCont.isEnabled()) {
+                    etCont.setEnabled(true);
+                }
+                t = 2;
+                quantVer = true;
+            } else if (checkedId==rbCrema.getId()) {
+                if (etCont.isEnabled()) {
+                    etCont.getText().clear();
+                    etCont.setEnabled(false);
+                }
+                t = 3;
+                quantVer = false;
+            } else if (checkedId==rbScir.getId()) {
+                if (etCont.isEnabled()) {
+                    etCont.getText().clear();
+                    etCont.setEnabled(false);
+                }
+                t = 4;
+                quantVer = false;
+            } else if (checkedId==rbVari.getId()) {
+                if (!etCont.isEnabled()) {
+                    etCont.setEnabled(true);
+                }
+                t = 5;
+                quantVer = true;
+            }
+        });
+
+        btnAnnulla.setOnClickListener(v -> {
+            setResult(RESULT_CANCELED, replyIntent);
+            finish();
+        });
+
+        btnOK.setOnClickListener(v -> {
+            if (etNome.getText().length()<=1) {
+                incompleto();
+            } else {
                 String nome = etNome.getText().toString();
 
-                int tipo = checkTipo();
-                if (tipo == -1) {
+                if (t == -1) {
                     incompleto();
-                    return;
-                }
-
-                if (etNum.getText().length()==0) {
-                    incompleto();
-                    return;
-                }
-                int confezioni = Integer.parseInt(etNum.toString());
-
-                int quantita;
-                if (quantVer) {
-                    if (etCont.getText().length()!=0) {
-                        quantita = Integer.parseInt(etCont.getText().toString());
-                    } else if (etCont.getText().length()==0 && tipo==5) {
-                        quantita = -1;
-                    } else {
-                        incompleto();
-                        return;
+                } else {
+                    String tipo = null;
+                    switch (t) {
+                        case 1:
+                            tipo = getString(R.string.compresse);
+                            break;
+                        case 2:
+                            tipo = getString(R.string.bustine);
+                            break;
+                        case 3:
+                            tipo = getString(R.string.crema);
+                            break;
+                        case 4:
+                            tipo = getString(R.string.sciroppo);
+                            break;
+                        case 5:
+                            tipo = getString(R.string.vari);
+                            break;
                     }
-                } else {
-                    quantita = -1;
-                }
 
-                if (etScad.getText().length()==0) {
-                    incompleto();
-                    return;
-                }
-                String scadenza = etScad.getText().toString();
+                    if (etNum.getText().length() == 0 || Integer.parseInt(etNum.getText().toString()) == 0) {
+                        incompleto();
+                    } else {
+                        int confezioni = Integer.parseInt(etNum.getText().toString());
 
-                String note;
-                if (etNote.getText().length()==0) {
-                    note = getString(R.string.nessuna_nota);
-                } else {
-                    note = etNote.getText().toString();
-                }
+                        if ((t==1 || t==2) && (etCont.getText().length()==0 || Integer.parseInt(etCont.getText().toString())==0)) {
+                            incompleto();
+                        } else {
+                            int quantita;
+                            if (quantVer) {
+                                if (t==5 && (etCont.getText().length()==0 || Integer.parseInt(etCont.getText().toString())==0)) {
+                                    quantita = -1;
+                                } else {
+                                    quantita = Integer.parseInt(etCont.getText().toString());
+                                }
+                            } else {
+                                quantita = -1;
+                            }
 
-                //Medicina medicina = new Medicina();
+                            if (etScad.getText().length() == 0) {
+                                incompleto();
+                            } else {
+                                String scadenza = etScad.getText().toString();
+
+                                String note;
+                                if (etNote.getText().length() == 0) {
+                                    note = getString(R.string.nessuna_nota);
+                                } else {
+                                    note = etNote.getText().toString();
+                                }
+
+                                Medicina medicina = new Medicina(nome, tipo, confezioni, quantita, scadenza, note);
+                                Log.d("prova", medicina.toString());
+                                replyIntent.putExtra(EXTRA_MEDICINA, medicina);
+                                setResult(RESULT_OK, replyIntent);
+                                finish();
+                            }
+                        }
+                    }
+                }
             }
         });
     }
@@ -120,85 +172,25 @@ public class AddActivity extends AppCompatActivity {
         etNote = findViewById(R.id.et_note);
         etNum = findViewById(R.id.et_num1);
         etCont = findViewById(R.id.et_num2);
-        cbBust = findViewById(R.id.cb_2);
-        cbCompres = findViewById(R.id.cb_1);
-        cbCrema = findViewById(R.id.cb_3);
-        cbScir = findViewById(R.id.cb_4);
-        cbVari = findViewById(R.id.cb_5);
+        rbBust = findViewById(R.id.rb_2);
+        rbCompres = findViewById(R.id.rb_1);
+        rbCrema = findViewById(R.id.rb_3);
+        rbScir = findViewById(R.id.rb_4);
+        rbVari = findViewById(R.id.rb_5);
         btnAnnulla = findViewById(R.id.btn_annulla);
         btnOK = findViewById(R.id.btn_ok);
+        rgType = findViewById(R.id.radioGroup);
     }
 
     private void updateLabel() {
-        String myFormat = "MM/dd/yy";
+        String myFormat = "dd/MM/yy";
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.ITALY);
         etScad.setText(sdf.format(myCalendar.getTime()));
-    }
-
-    private int checkTipo() {
-        if (cbCompres.isChecked()) {
-            quantVer = true;
-            return 1;
-        } else if (cbBust.isChecked()) {
-            quantVer = true;
-            return 2;
-        } else if (cbCrema.isChecked()) {
-            quantVer = false;
-            return 3;
-        } else if (cbScir.isChecked()) {
-            quantVer = false;
-            return 4;
-        } else if (cbVari.isChecked()){
-            quantVer = true;
-            return 5;
-        } else {
-            return -1;
-        }
     }
 
     private void incompleto() {
         Toast.makeText(this, R.string.completa_tutti_campi, Toast.LENGTH_LONG).show();
     }
 
-    public void clickOnCheckbox(View view) {
-        int[] daControllare = new int[5];
-        daControllare[0] = cbCompres.getId();
-        daControllare[1] = cbBust.getId();
-        daControllare[2] = cbCrema.getId();
-        daControllare[3] = cbScir.getId();
-        daControllare[4] = cbVari.getId();
-        if (((CheckBox)view).isChecked()) {
-            for (int i = 0; i < 5; i++) {
-                if (view.getId() != daControllare[i]) {
-                    switch (i) {
-                        case 0:
-                            if (cbCompres.isChecked()) {
-                                cbCompres.setChecked(false);
-                                break;
-                            }
-                        case 1:
-                            if (cbBust.isChecked()) {
-                                cbBust.setChecked(false);
-                                break;
-                            }
-                        case 2:
-                            if (cbCrema.isChecked()) {
-                                cbCrema.setChecked(false);
-                                break;
-                            }
-                        case 3:
-                            if (cbScir.isChecked()) {
-                                cbScir.setChecked(false);
-                                break;
-                            }
-                        case 4:
-                            if (cbVari.isChecked()) {
-                                cbVari.setChecked(false);
-                                break;
-                            }
-                    }
-                }
-            }
-        }
-    }
+
 }

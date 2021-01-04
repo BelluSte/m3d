@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -12,67 +14,52 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ArchivioFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.LinkedList;
+
+import belluste.medicine.model.Armadietto;
+import belluste.medicine.model.ArmadiettoViewModel;
+import belluste.medicine.model.MedListAdapter;
+import belluste.medicine.model.Medicina;
+
+
 public class ArchivioFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private ArmadiettoViewModel viewModel;
 
     public ArchivioFragment() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ArchivioFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ArchivioFragment newInstance(String param1, String param2) {
-        ArchivioFragment fragment = new ArchivioFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+        super(R.layout.fragment_archivio);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_archivio, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         TextView EmptyTV = view.findViewById(R.id.tv_empty_archivio);
         RecyclerView ArchivioRV = view.findViewById(R.id.rv_archivio);
-        if (ArchivioRV.getAdapter() != null) {
+
+        MedListAdapter adapter = new MedListAdapter(new MedListAdapter.MedDiff());
+        ArchivioRV.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        viewModel = new ViewModelProvider(requireActivity()).get(ArmadiettoViewModel.class);
+        viewModel.contenuto.observe(getViewLifecycleOwner(), armadietto -> {
+            adapter.submitList(armadietto.listaArchiviati());
+        });
+
+        ArchivioRV.setAdapter(adapter);
+        if (viewModel.contenuto.getValue().listaArchiviati().size()>0) {
             EmptyTV.setVisibility(View.GONE);
         }
     }
+
 }

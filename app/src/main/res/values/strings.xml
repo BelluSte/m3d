@@ -5,12 +5,29 @@
     <string name="armadietto">Locker</string>
     <string name="archivio">Archive</string>
     <string name="impostazioni">Settings</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment" translatable="false">Hello blank fragment</string>
     <string name="al_momento_non_stai_assumendo_medicine">You are not taking medicines</string>
     <string name="armadietto_delle_medicine_vuoto">Medicine locker is empty</string>
     <string name="nessuna_medicina_in_archivio">No medicine on archive</string>
     <string name="add_medicine" translatable="false">add medicine</string>
     <string name="completa_tutti_campi">Missing fields</string>
     <string name="nessuna_nota">No memo</string>
+    <string name="_0" translatable="false">0</string>
+    <string name="aggiungi_all_armadietto">ADD NEW MEDICINE</string>
+    <string name="nome">Name</string>
+    <string name="tipo_di_medicina">Medicine type</string>
+    <string name="confezioni_da_aggiungere">N° of packs</string>
+    <string name="quantit_per_confezione">Quantity for pack</string>
+    <string name="scadenza">Expiration</string>
+    <string name="note">Memo</string>
+    <string name="annulla">Cancel</string>
+    <string name="ok" translatable="false">OK</string>
+    <string name="dd_mm_yy" translatable="false">dd/mm/yy</string>
+    <string name="compresse">Tablets</string>
+    <string name="bustine">Sachets</string>
+    <string name="crema">Cream</string>
+    <string name="sciroppo">Syrup</string>
+    <string name="vari">Others</string>
+    <string name="medicina_aggiunta">Operation successfully complete</string>
+    <string name="medicina_gia_presente">Medicine already exists</string>
+    <string name="annullato">Operation canceled</string>
 </resources>

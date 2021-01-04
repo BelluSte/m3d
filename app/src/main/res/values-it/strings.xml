@@ -11,4 +11,20 @@
     <string name="al_momento_non_stai_assumendo_medicine">Al momento non stai assumendo medicine</string>
     <string name="completa_tutti_campi">Completa correttamente tutti i campi</string>
     <string name="nessuna_nota">Nessuna nota</string>
+    <string name="aggiungi_all_armadietto">AGGIUNGI ALL\'ARMADIETTO</string>
+    <string name="nome">Nome</string>
+    <string name="tipo_di_medicina">Tipo di medicina</string>
+    <string name="confezioni_da_aggiungere">Confezioni da aggiungere</string>
+    <string name="quantit_per_confezione">Quantità per confezione</string>
+    <string name="scadenza">Scadenza</string>
+    <string name="note">Note</string>
+    <string name="annulla">Annulla</string>
+    <string name="compresse">Compresse</string>
+    <string name="bustine">Bustine</string>
+    <string name="crema">Crema</string>
+    <string name="sciroppo">Sciroppo</string>
+    <string name="vari">Vari</string>
+    <string name="medicina_aggiunta"> Medicina aggiunta con successo</string>
+    <string name="medicina_gia_presente">Medicina già presente o in archivio</string>
+    <string name="annullato">Operazione annullata</string>
 </resources>

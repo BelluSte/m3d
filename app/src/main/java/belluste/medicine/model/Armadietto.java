@@ -1,49 +1,81 @@
 package belluste.medicine.model;
 
-import java.util.Set;
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.TreeMap;
 
 public class Armadietto {
 
-    private final TreeMap<String,Medicina> contenuto;
+    private final LinkedList<Medicina> contenuto;
 
     public Armadietto() {
-        this.contenuto = new TreeMap<>();
+        this.contenuto = new LinkedList<>();
     }
 
-    //TODO: archivio return set con archiviato=true
+    public Armadietto(LinkedList<Medicina> lista) {
+        this.contenuto = new LinkedList<>(lista);
+    }
 
-    public Set<String> listaNomi() {
-        return contenuto.keySet();
+    public void setContenuto(Armadietto armadietto) {
+        contenuto.clear();
+        contenuto.addAll(armadietto.getContenuto());
+    }
+
+    public LinkedList<Medicina> getContenuto() {
+        Collections.sort(contenuto, Medicina.medNameComparator);
+        return contenuto;
+    }
+
+    public LinkedList<Medicina> listaAttivi() {
+        LinkedList<Medicina> lista = new LinkedList<>();
+        for (Medicina m : contenuto) {
+            if (!m.getArchiviato()) {
+                lista.add(m);
+            }
+        }
+        return lista;
+    }
+
+    public LinkedList<Medicina> listaArchiviati() {
+        LinkedList<Medicina> lista = new LinkedList<>();
+        for (Medicina m : contenuto) {
+            if (m.getArchiviato()) {
+                lista.add(m);
+            }
+        }
+        return lista;
     }
 
     public boolean addMedicina(Medicina medicina) {
-        if (contenuto.containsValue(medicina)) {
+        if (contenuto.contains(medicina)) {
             return false;
         } else {
             String nome = medicina.getNome();
-            Set<String> nomi = listaNomi();
-            if (nomi.contains(nome)) {
-                Medicina med = contenuto.remove(nome);
-                if (med != null) {
-                    String newName = nome + " " + med.getTipo();
-                    contenuto.put(newName, med);
+            for (Medicina m : contenuto) {
+                if (m.getNome().equals(nome)) {
+                    String nuovoNome = m.getNome() + " - " + m.getTipo();
+                    Medicina nuova1 = new Medicina(m, nuovoNome);
+                    contenuto.add(nuova1);
+                    contenuto.remove(m);
+                    nuovoNome = medicina.getNome() + " - " + medicina.getTipo();
+                    Medicina nuova2 = new Medicina(medicina, nuovoNome);
+                    contenuto.add(nuova2);
+                    return true;
                 }
-                nome = nome + " " + medicina.getTipo();
-                contenuto.put(nome, medicina);
-                return true;
-            } else {
-                contenuto.put(nome, medicina);
-                return true;
             }
+            contenuto.add(medicina);
+            return true;
         }
     }
 
-    public void removeMedicina(String nome) {
-        contenuto.remove(nome);
+    public void removeMedicina(Medicina medicina) {
+        contenuto.remove(medicina);
     }
 
-    public void aggiungiTipoAlNome() {
-        //TODO: valutare se aggiungere funzione di aggiunta del tipo di medicinale all'elenco dei nomi
+    @Override
+    public String toString() {
+        return "Armadietto{" +
+                "contenuto=" + contenuto.toString() +
+                "}";
     }
 }
