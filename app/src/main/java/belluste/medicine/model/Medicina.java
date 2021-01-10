@@ -143,16 +143,4 @@ public class Medicina implements Parcelable {
         return name1.compareTo(name2);
     };
 
-    @Override
-    public String toString() {
-        return "Medicina{" +
-                "mNome='" + mNome + '\'' +
-                ", mTipo='" + mTipo + '\'' +
-                ", mConfezioni=" + mConfezioni +
-                ", mQuantita=" + mQuantita +
-                ", mScadenza='" + mScadenza + '\'' +
-                ", mNote='" + mNote + '\'' +
-                ", mArchiviato=" + mArchiviato +
-                '}';
-    }
 }

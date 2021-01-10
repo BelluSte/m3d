@@ -21,7 +21,7 @@
     <string name="note">Memo</string>
     <string name="annulla">Cancel</string>
     <string name="ok" translatable="false">OK</string>
-    <string name="dd_mm_yy" translatable="false">dd/mm/yy</string>
+    <string name="dd_mm_yy">mm/dd/yy</string>
     <string name="compresse">Tablets</string>
     <string name="bustine">Sachets</string>
     <string name="crema">Cream</string>
@@ -30,4 +30,12 @@
     <string name="medicina_aggiunta">Operation successfully complete</string>
     <string name="medicina_gia_presente">Medicine already exists</string>
     <string name="annullato">Operation canceled</string>
+    <string name="tipo" translatable="false">Tipo</string>
+    <string name="n" translatable="false">N</string>
+    <string name="confezione_da">pack of</string>
+    <string name="scade_il">expiration date</string>
+    <string name="day_format">MM/dd/yy</string>
+    <string name="totale">total:</string>
+    <string name="confezioni">packs:</string>
+    <string name="quantit_presenti_nell_armadietto">Quantity in the locker:</string>
 </resources>

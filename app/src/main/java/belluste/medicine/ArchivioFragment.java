@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,7 +17,6 @@ import android.widget.TextView;
 
 import java.util.LinkedList;
 
-import belluste.medicine.model.Armadietto;
 import belluste.medicine.model.ArmadiettoViewModel;
 import belluste.medicine.model.MedListAdapter;
 import belluste.medicine.model.Medicina;
@@ -48,16 +48,26 @@ public class ArchivioFragment extends Fragment {
         TextView EmptyTV = view.findViewById(R.id.tv_empty_archivio);
         RecyclerView ArchivioRV = view.findViewById(R.id.rv_archivio);
 
-        MedListAdapter adapter = new MedListAdapter(new MedListAdapter.MedDiff());
+        viewModel = new ViewModelProvider(requireActivity()).get(ArmadiettoViewModel.class);
+
+        MedListAdapter adapter = new MedListAdapter();
         ArchivioRV.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        viewModel = new ViewModelProvider(requireActivity()).get(ArmadiettoViewModel.class);
-        viewModel.contenuto.observe(getViewLifecycleOwner(), armadietto -> {
+        /*viewModel.contenuto.observe(getViewLifecycleOwner(), armadietto -> {
             adapter.submitList(armadietto.listaArchiviati());
-        });
+        });*/
+
+        final Observer<LinkedList<Medicina>> observer = new Observer<LinkedList<Medicina>>() {
+            @Override
+            public void onChanged(LinkedList<Medicina> lista) {
+                adapter.submitList(lista);
+                //Log.d("prova", "onChanged called");
+            }
+        };
+        viewModel.getArchiviati().observe(getViewLifecycleOwner(), observer);
 
         ArchivioRV.setAdapter(adapter);
-        if (viewModel.contenuto.getValue().listaArchiviati().size()>0) {
+        if (viewModel.listaArchiviati().size()>0) {
             EmptyTV.setVisibility(View.GONE);
         }
     }

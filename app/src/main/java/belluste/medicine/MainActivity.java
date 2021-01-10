@@ -97,8 +97,9 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode==REQUEST_CODE && resultCode==RESULT_OK && data!=null) {
             Medicina medicina = data.getParcelableExtra(EXTRA_MEDICINA);
-            if(viewModel.AddMedicina(medicina)) {
+            if(armadietto.addMedicina(medicina)) {
                 Toast.makeText(this, R.string.medicina_aggiunta, Toast.LENGTH_LONG).show();
+                viewModel.SetContenuto(armadietto);
                 Salva();
             } else {
                 Toast.makeText(this, R.string.medicina_gia_presente, Toast.LENGTH_LONG).show();

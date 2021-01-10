@@ -2,7 +2,7 @@ package belluste.medicine.model;
 
 import java.util.Collections;
 import java.util.LinkedList;
-import java.util.TreeMap;
+import java.util.Objects;
 
 public class Armadietto {
 
@@ -16,13 +16,7 @@ public class Armadietto {
         this.contenuto = new LinkedList<>(lista);
     }
 
-    public void setContenuto(Armadietto armadietto) {
-        contenuto.clear();
-        contenuto.addAll(armadietto.getContenuto());
-    }
-
     public LinkedList<Medicina> getContenuto() {
-        Collections.sort(contenuto, Medicina.medNameComparator);
         return contenuto;
     }
 
@@ -50,20 +44,8 @@ public class Armadietto {
         if (contenuto.contains(medicina)) {
             return false;
         } else {
-            String nome = medicina.getNome();
-            for (Medicina m : contenuto) {
-                if (m.getNome().equals(nome)) {
-                    String nuovoNome = m.getNome() + " - " + m.getTipo();
-                    Medicina nuova1 = new Medicina(m, nuovoNome);
-                    contenuto.add(nuova1);
-                    contenuto.remove(m);
-                    nuovoNome = medicina.getNome() + " - " + medicina.getTipo();
-                    Medicina nuova2 = new Medicina(medicina, nuovoNome);
-                    contenuto.add(nuova2);
-                    return true;
-                }
-            }
             contenuto.add(medicina);
+            //Collections.sort(contenuto, Medicina.medNameComparator);
             return true;
         }
     }
@@ -73,9 +55,15 @@ public class Armadietto {
     }
 
     @Override
-    public String toString() {
-        return "Armadietto{" +
-                "contenuto=" + contenuto.toString() +
-                "}";
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Armadietto that = (Armadietto) o;
+        return (Objects.equals(contenuto, that.contenuto) && (contenuto.size() == that.contenuto.size()));
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(contenuto);
     }
 }

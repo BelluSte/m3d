@@ -6,21 +6,32 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import belluste.medicine.R;
+import belluste.medicine.SchedaFragment;
 
 public class MedViewHolder extends RecyclerView.ViewHolder {
 
-    private final TextView tvNome;
+    private final TextView tvNome, tvTipo;
+    private int mPosition;
 
     public MedViewHolder(@NonNull View itemView) {
         super(itemView);
-        tvNome = itemView.findViewById(R.id.tv_item);
+        itemView.setOnClickListener(v -> {
+            mPosition = getAdapterPosition();
+            SchedaFragment scheda = SchedaFragment.newInstance(mPosition);
+            AppCompatActivity activity = (AppCompatActivity) v.getContext();
+            activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragmentHost, scheda, "scheda").commit();
+        });
+        tvNome = itemView.findViewById(R.id.tv_item_nome);
+        tvTipo = itemView.findViewById(R.id.tv_item_tipo);
     }
 
-    public void bind(String nome) {
+    public void bind(String nome, String tipo) {
         tvNome.setText(nome);
+        tvTipo.setText(tipo);
     }
 
     static MedViewHolder create(ViewGroup parent) {

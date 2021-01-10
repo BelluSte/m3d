@@ -1,6 +1,194 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SchedaFragment"/>
+    tools:context=".SchedaFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_scheda_nome"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/nome"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textColor="@color/teal_700"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_scheda_tipo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/tipo"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_scheda_nome" />
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/confezione_da"
+            android:textSize="18sp"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toStartOf="@+id/tv_scheda_quantita"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_scheda_tipo" />
+
+        <TextView
+            android:id="@+id/tv_scheda_quantita"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@string/n"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/textView11"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/textView11" />
+
+        <EditText
+            android:id="@+id/et_scheda_note"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:enabled="false"
+            android:hint="@string/nessuna_nota"
+            android:inputType="textMultiLine"
+            android:isScrollContainer="true"
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/guideline5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView11"
+            app:layout_constraintVertical_bias="0.0"
+            android:autofillHints="" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.5" />
+
+        <TextView
+            android:id="@+id/textView14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/scade_il"
+            android:textSize="18sp"
+            android:textStyle="italic"
+            app:layout_constraintEnd_toStartOf="@+id/tv_scheda_scadenza"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/et_scheda_note" />
+
+        <TextView
+            android:id="@+id/tv_scheda_scadenza"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="@string/scadenza"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/textView14"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/textView14" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="30dp"
+            android:text="@string/quantit_presenti_nell_armadietto"
+            android:textSize="20sp"
+            android:textStyle="bold|italic"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView14" />
+
+        <TextView
+            android:id="@+id/textView6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:text="@string/confezioni"
+            android:textSize="18sp"
+            android:textStyle="italic"
+            app:layout_constraintBottom_toBottomOf="@+id/et_scheda_confezioni"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/et_scheda_confezioni" />
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:text="@string/totale"
+            android:textSize="18sp"
+            android:textStyle="italic"
+            app:layout_constraintBottom_toBottomOf="@+id/ed_scheda_totale"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/ed_scheda_totale" />
+
+        <EditText
+            android:id="@+id/et_scheda_confezioni"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:autofillHints=""
+            android:ems="3"
+            android:enabled="false"
+            android:inputType="number"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintStart_toEndOf="@+id/textView6"
+            app:layout_constraintTop_toBottomOf="@+id/textView4"
+            tools:ignore="LabelFor" />
+
+        <EditText
+            android:id="@+id/ed_scheda_totale"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:ems="3"
+            android:enabled="false"
+            android:inputType="number"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="@+id/et_scheda_confezioni"
+            app:layout_constraintTop_toBottomOf="@+id/et_scheda_confezioni"
+            tools:ignore="LabelFor" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

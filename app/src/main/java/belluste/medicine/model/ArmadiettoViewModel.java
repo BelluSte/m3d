@@ -1,25 +1,37 @@
 package belluste.medicine.model;
 
-import android.app.Application;
-
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 
-public class ArmadiettoViewModel extends AndroidViewModel {
+import java.util.LinkedList;
 
-    public final MutableLiveData<Armadietto> contenuto;
 
-    public ArmadiettoViewModel(@NonNull Application application) {
-        super(application);
-        contenuto = new MutableLiveData<>();
-    }
+public class ArmadiettoViewModel extends ViewModel {
+
+    //private Armadietto armadietto;
+    private final MutableLiveData<LinkedList<Medicina>> contenutoAttivi = new MutableLiveData<>();
+    private final MutableLiveData<LinkedList<Medicina>> contenutoArchiviati = new MutableLiveData<>();
 
     public void SetContenuto(Armadietto armadietto) {
-        contenuto.setValue(armadietto);
+        //this.armadietto = armadietto;
+        contenutoAttivi.setValue(armadietto.listaAttivi());
+        contenutoArchiviati.setValue(armadietto.listaArchiviati());
     }
 
-    public boolean AddMedicina(Medicina medicina) {
-        return contenuto.getValue().addMedicina(medicina);
+    public LiveData<LinkedList<Medicina>> getAttivi() {
+        return contenutoAttivi;
+    }
+
+    public LiveData<LinkedList<Medicina>> getArchiviati() {
+        return contenutoArchiviati;
+    }
+
+    public LinkedList<Medicina> listaAttivi() {
+        return contenutoAttivi.getValue();
+    }
+
+    public LinkedList<Medicina> listaArchiviati() {
+        return contenutoArchiviati.getValue();
     }
 }

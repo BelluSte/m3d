@@ -183,7 +183,7 @@ public class AddActivity extends AppCompatActivity {
     }
 
     private void updateLabel() {
-        String myFormat = "dd/MM/yy";
+        String myFormat = getString(R.string.day_format);
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.ITALY);
         etScad.setText(sdf.format(myCalendar.getTime()));
     }

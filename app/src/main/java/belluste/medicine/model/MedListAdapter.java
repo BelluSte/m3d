@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.ListAdapter;
 
 public class MedListAdapter extends ListAdapter<Medicina, MedViewHolder> {
 
-    public MedListAdapter(@NonNull DiffUtil.ItemCallback<Medicina> diffCallback) {
-        super(diffCallback);
+    public MedListAdapter() {
+        super(MEDICINA_ITEM_CALLBACK);
     }
 
     @NonNull
@@ -20,12 +20,10 @@ public class MedListAdapter extends ListAdapter<Medicina, MedViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MedViewHolder holder, int position) {
-        Medicina med = getItem(position);
-        holder.bind(med.getNome());
+        holder.bind(getItem(position).getNome(), getItem(position).getTipo());
     }
 
-    public static class MedDiff extends DiffUtil.ItemCallback<Medicina> {
-
+    public static final DiffUtil.ItemCallback<Medicina> MEDICINA_ITEM_CALLBACK = new DiffUtil.ItemCallback<Medicina>() {
         @Override
         public boolean areItemsTheSame(@NonNull Medicina oldItem, @NonNull Medicina newItem) {
             return oldItem == newItem;
@@ -33,9 +31,8 @@ public class MedListAdapter extends ListAdapter<Medicina, MedViewHolder> {
 
         @Override
         public boolean areContentsTheSame(@NonNull Medicina oldItem, @NonNull Medicina newItem) {
-            boolean verifica;
-            verifica = oldItem.getNome().equals(newItem.getNome()) && oldItem.getTipo().equals(newItem.getTipo());
-            return verifica;
+            return oldItem.equals(newItem);
         }
-    }
+    };
+
 }
