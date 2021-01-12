@@ -34,4 +34,10 @@
     <string name="totale">totale:</string>
     <string name="confezioni">confezioni:</string>
     <string name="quantit_presenti_nell_armadietto">Quantità presenti nell\'armadietto:</string>
+    <string name="modifica">MODIFICA</string>
+    <string name="cancella">CANCELLA</string>
+    <string name="prendi_1">PRENDI 1</string>
+    <string name="add_to_home">AGGIUNGI A HOME</string>
+    <string name="archivia">ARCHIVIA</string>
+    <string name="archiviato">ARCHIVIATO</string>
 </resources>

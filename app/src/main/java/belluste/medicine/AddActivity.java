@@ -148,7 +148,7 @@ public class AddActivity extends AppCompatActivity {
 
                                 String note;
                                 if (etNote.getText().length() == 0) {
-                                    note = getString(R.string.nessuna_nota);
+                                    note = "";
                                 } else {
                                     note = etNote.getText().toString();
                                 }

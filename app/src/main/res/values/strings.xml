@@ -38,4 +38,10 @@
     <string name="totale">total:</string>
     <string name="confezioni">packs:</string>
     <string name="quantit_presenti_nell_armadietto">Quantity in the locker:</string>
+    <string name="modifica">EDIT</string>
+    <string name="cancella">DELETE</string>
+    <string name="prendi_1">TAKE 1</string>
+    <string name="add_to_home">ADD TO HOME</string>
+    <string name="archivia">ADD TO ARCHIVE</string>
+    <string name="archiviato">ARCHIVED</string>
 </resources>
