@@ -109,7 +109,6 @@ public class SchedaFragment extends Fragment {
             mNote.setText(medicina.getNote());
         }
         mConfezioni.setText(String.valueOf(medicina.getConfezioni()));
-
     }
 
     private void clickListeners() {

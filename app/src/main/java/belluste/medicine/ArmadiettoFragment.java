@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -58,15 +57,7 @@ public class ArmadiettoFragment extends Fragment {
         MedListAdapter adapter = new MedListAdapter();
         ArmadiettoRV.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        //viewModel.getCon.observe(getViewLifecycleOwner(), armadietto -> adapter.submitList(armadietto.listaAttivi()));
-
-        final Observer<LinkedList<Medicina>> observer = new Observer<LinkedList<Medicina>>() {
-            @Override
-            public void onChanged(LinkedList<Medicina> lista) {
-                adapter.submitList(lista);
-                //Log.d("prova", "onChanged called");
-            }
-        };
+        final Observer<LinkedList<Medicina>> observer = adapter::submitList;
         viewModel.getAttivi().observe(getViewLifecycleOwner(), observer);
 
         ArmadiettoRV.setAdapter(adapter);

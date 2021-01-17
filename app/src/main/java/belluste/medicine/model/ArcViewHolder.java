@@ -11,19 +11,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import belluste.medicine.R;
 import belluste.medicine.SchedaArchivioFragment;
-import belluste.medicine.SchedaFragment;
 
-public class MedViewHolder extends RecyclerView.ViewHolder {
+public class ArcViewHolder extends RecyclerView.ViewHolder {
 
     private final TextView tvNome, tvTipo;
     private int mPosition;
 
-    public MedViewHolder(@NonNull View itemView) {
+    public ArcViewHolder(@NonNull View itemView) {
         super(itemView);
         itemView.setOnClickListener(v -> {
             mPosition = getAdapterPosition();
             AppCompatActivity activity = (AppCompatActivity) v.getContext();
-            SchedaFragment scheda = SchedaFragment.newInstance(mPosition);
+            SchedaArchivioFragment scheda = SchedaArchivioFragment.newInstance(mPosition);
             activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragmentHost, scheda, "scheda").commit();
         });
         tvNome = itemView.findViewById(R.id.tv_item_nome);
@@ -35,10 +34,9 @@ public class MedViewHolder extends RecyclerView.ViewHolder {
         tvTipo.setText(tipo);
     }
 
-    static MedViewHolder create(ViewGroup parent) {
+    static ArcViewHolder create(ViewGroup parent) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.recyclerview_item, parent, false);
-        return new MedViewHolder(view);
+        return new ArcViewHolder(view);
     }
-
 }

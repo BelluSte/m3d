@@ -30,7 +30,7 @@
     <string name="confezione_da">confezione da:</string>
     <string name="scade_il">scade il:</string>
     <string name="dd_mm_yy">dd/mm/yy</string>
-    <string name="day_format">dd/MM/yy</string>
+    <string name="day_format">dd/MM/yyyy</string>
     <string name="totale">totale:</string>
     <string name="confezioni">confezioni:</string>
     <string name="quantit_presenti_nell_armadietto">Quantità presenti nell\'armadietto:</string>
@@ -40,4 +40,8 @@
     <string name="add_to_home">AGGIUNGI A HOME</string>
     <string name="archivia">ARCHIVIA</string>
     <string name="archiviato">ARCHIVIATO</string>
+    <string name="archiviato">ARCHIVIATO</string>
+    <string name="aggiunto_in_archivio_in_data">Aggiunto in archivio in data:</string>
+    <string name="aggiunto">Aggiunto</string>
+    <string name="archiviato_minuscolo">Archiviato</string>
 </resources>

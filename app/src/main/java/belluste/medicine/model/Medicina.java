@@ -11,29 +11,19 @@ public class Medicina implements Parcelable {
     private final String mNome;
     private final String mTipo;          //1=compresse; 2=bustine; 3=crema; 4=sciroppo 5=altro
     private int mConfezioni;
-    private int mQuantita;      //-1=indefinita
-    private String mScadenza;
+    private final int mQuantita;      //-1=indefinita
+    private final String mScadenza;
     private String mNote;
-    private boolean mArchiviato;
+    private final String mDataAgg;
 
-    public Medicina(String nome, String tipo, int confezioni, int quantita, String scadenza, String note) {
+    public Medicina(String nome, String tipo, int confezioni, int quantita, String scadenza, String note, String dataAgg) {
         this.mNome = nome;
         this.mTipo = tipo;
         this.mConfezioni = confezioni;
         this.mQuantita = quantita;
         this.mScadenza = scadenza;
         this.mNote = note;
-        this.mArchiviato = false;
-    }
-
-    public Medicina(Medicina m, String nuovoNome) {
-        this.mNome = nuovoNome;
-        this.mTipo = m.getTipo();
-        this.mConfezioni = m.getConfezioni();
-        this.mQuantita = m.getQuantita();
-        this.mScadenza = m.getScadenza();
-        this.mNote = m.getNote();
-        this.mArchiviato = m.getArchiviato();
+        this.mDataAgg = dataAgg;
     }
 
     protected Medicina(Parcel in) {
@@ -43,7 +33,7 @@ public class Medicina implements Parcelable {
         mQuantita = in.readInt();
         mScadenza = in.readString();
         mNote = in.readString();
-        mArchiviato = in.readByte() != 0;
+        mDataAgg = in.readString();
     }
 
     public static final Creator<Medicina> CREATOR = new Creator<Medicina>() {
@@ -78,16 +68,8 @@ public class Medicina implements Parcelable {
         return mQuantita;
     }
 
-    public void setQuantita(int mQuantita) {
-        this.mQuantita = mQuantita;
-    }
-
     public String getScadenza() {
         return mScadenza;
-    }
-
-    public void setScadenza(String mScadenza) {
-        this.mScadenza = mScadenza;
     }
 
     public String getNote() {
@@ -98,12 +80,8 @@ public class Medicina implements Parcelable {
         this.mNote = mNote;
     }
 
-    public boolean getArchiviato() {
-        return mArchiviato;
-    }
-
-    public void setArchiviato(boolean mArchiviato) {
-        this.mArchiviato = mArchiviato;
+    public String getDataAgg() {
+        return mDataAgg;
     }
 
     @Override
@@ -133,7 +111,7 @@ public class Medicina implements Parcelable {
         dest.writeInt(mQuantita);
         dest.writeString(mScadenza);
         dest.writeString(mNote);
-        dest.writeByte((byte) (mArchiviato ? 1 : 0));
+        dest.writeString(mDataAgg);
     }
 
     //comparator per ordinare per nome

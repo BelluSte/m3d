@@ -20,32 +20,14 @@ public class Armadietto {
         return contenuto;
     }
 
-    public LinkedList<Medicina> listaAttivi() {
-        LinkedList<Medicina> lista = new LinkedList<>();
-        for (Medicina m : contenuto) {
-            if (!m.getArchiviato()) {
-                lista.add(m);
-            }
-        }
-        return lista;
-    }
-
-    public LinkedList<Medicina> listaArchiviati() {
-        LinkedList<Medicina> lista = new LinkedList<>();
-        for (Medicina m : contenuto) {
-            if (m.getArchiviato()) {
-                lista.add(m);
-            }
-        }
-        return lista;
-    }
-
     public boolean addMedicina(Medicina medicina) {
         if (contenuto.contains(medicina)) {
             return false;
         } else {
             contenuto.add(medicina);
-            //Collections.sort(contenuto, Medicina.medNameComparator);
+            if (contenuto.size() > 1) {
+                Collections.sort(contenuto, Medicina.medNameComparator);
+            }
             return true;
         }
     }

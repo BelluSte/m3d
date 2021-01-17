@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -14,6 +13,7 @@ import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 import belluste.medicine.model.Medicina;
@@ -30,6 +30,8 @@ public class AddActivity extends AppCompatActivity {
     private boolean quantVer;
     private Intent replyIntent;
     private int t = -1;
+    private String myFormat;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,7 @@ public class AddActivity extends AppCompatActivity {
         replyIntent = new Intent();
 
         myCalendar = Calendar.getInstance();
+        myFormat = getString(R.string.day_format);
 
         DatePickerDialog.OnDateSetListener date = (view, year, month, dayOfMonth) -> {
             myCalendar.set(Calendar.YEAR, year);
@@ -153,8 +156,10 @@ public class AddActivity extends AppCompatActivity {
                                     note = etNote.getText().toString();
                                 }
 
-                                Medicina medicina = new Medicina(nome, tipo, confezioni, quantita, scadenza, note);
-                                Log.d("prova", medicina.toString());
+                                Date data = Calendar.getInstance().getTime();
+                                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.ITALY);
+                                String dataAgg = sdf.format(data);
+                                Medicina medicina = new Medicina(nome, tipo, confezioni, quantita, scadenza, note, dataAgg);
                                 replyIntent.putExtra(EXTRA_MEDICINA, medicina);
                                 setResult(RESULT_OK, replyIntent);
                                 finish();
@@ -183,7 +188,6 @@ public class AddActivity extends AppCompatActivity {
     }
 
     private void updateLabel() {
-        String myFormat = getString(R.string.day_format);
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.ITALY);
         etScad.setText(sdf.format(myCalendar.getTime()));
     }

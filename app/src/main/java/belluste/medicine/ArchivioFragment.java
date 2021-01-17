@@ -17,9 +17,9 @@ import android.widget.TextView;
 
 import java.util.LinkedList;
 
+import belluste.medicine.model.ArcListAdapter;
 import belluste.medicine.model.ArmadiettoViewModel;
-import belluste.medicine.model.MedListAdapter;
-import belluste.medicine.model.Medicina;
+import belluste.medicine.model.MedArchiviata;
 
 
 public class ArchivioFragment extends Fragment {
@@ -50,20 +50,10 @@ public class ArchivioFragment extends Fragment {
 
         viewModel = new ViewModelProvider(requireActivity()).get(ArmadiettoViewModel.class);
 
-        MedListAdapter adapter = new MedListAdapter();
+        ArcListAdapter adapter = new ArcListAdapter();
         ArchivioRV.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        /*viewModel.contenuto.observe(getViewLifecycleOwner(), armadietto -> {
-            adapter.submitList(armadietto.listaArchiviati());
-        });*/
-
-        final Observer<LinkedList<Medicina>> observer = new Observer<LinkedList<Medicina>>() {
-            @Override
-            public void onChanged(LinkedList<Medicina> lista) {
-                adapter.submitList(lista);
-                //Log.d("prova", "onChanged called");
-            }
-        };
+        final Observer<LinkedList<MedArchiviata>> observer = adapter::submitList;
         viewModel.getArchiviati().observe(getViewLifecycleOwner(), observer);
 
         ArchivioRV.setAdapter(adapter);

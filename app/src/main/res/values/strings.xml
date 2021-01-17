@@ -34,7 +34,7 @@
     <string name="n" translatable="false">N</string>
     <string name="confezione_da">pack of</string>
     <string name="scade_il">expiration date</string>
-    <string name="day_format">MM/dd/yy</string>
+    <string name="day_format">MM/dd/yyyy</string>
     <string name="totale">total:</string>
     <string name="confezioni">packs:</string>
     <string name="quantit_presenti_nell_armadietto">Quantity in the locker:</string>
@@ -44,4 +44,9 @@
     <string name="add_to_home">ADD TO HOME</string>
     <string name="archivia">ADD TO ARCHIVE</string>
     <string name="archiviato">ARCHIVED</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="date" translatable="false">Date</string>
+    <string name="aggiunto_in_archivio_in_data">Added to archive on:</string>
+    <string name="aggiunto">Added on</string>
+    <string name="archiviato_minuscolo">Archived on</string>
 </resources>
