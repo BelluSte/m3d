@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
 
         //recupera archivio salvato
         String archivioString = preferences.getString(ARCHIVIO, null);
-        if (armadiettoString != null) {
+        if (archivioString != null) {
             Type collectionType = new TypeToken<LinkedList<MedArchiviata>>(){}.getType();
             archivio = new Archivio(gson.fromJson(archivioString, collectionType));
         } else {

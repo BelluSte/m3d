@@ -7,7 +7,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,13 +22,13 @@ public class SchedaFragment extends Fragment {
 
     private static final String POS = "belluste.medicine.posizione";
 
-    private int mPos, quantita, totale;
+    private int mPos, totale, confezioni;
     private ArmadiettoViewModel viewModel;
     private Medicina medicina;
 
     private TextView mNome, mTipo, mQuantita, mScadenza, mTestoQuant, mTestoTot;
     private EditText mNote, mConfezioni, mTotale;
-    private Button btnAddHome, btnEdit, btnDelete, btnPrendi, btnArchivia;
+    private Button btnAddHome, btnEdit, btnDelete, btnPrendi, btnArchivia, btnOK, btnAnnulla;
 
     public SchedaFragment() {
     }
@@ -84,15 +83,17 @@ public class SchedaFragment extends Fragment {
         mTestoQuant = v.findViewById(R.id.tv_scatola_da);
         mTestoTot = v.findViewById(R.id.tv_totale);
         btnArchivia = v.findViewById(R.id.btn_archivia);
+        btnOK = v.findViewById(R.id.btn_scheda_ok);
+        btnAnnulla = v.findViewById(R.id.btn_scheda_annulla);
     }
 
     private void compilaScheda() {
         mNome.setText(medicina.getNome());
         mTipo.setText(medicina.getTipo());
-        quantita = medicina.getQuantita();
+        totale = medicina.getTotale();
+        int quantita = medicina.getQuantita();
         if (quantita != -1) {
             mQuantita.setText(String.valueOf(quantita));
-            totale = medicina.getConfezioni() * medicina.getQuantita();
             mTotale.setText(String.valueOf(totale));
             if (totale == 0) {
                 btnPrendi.setVisibility(View.GONE);
@@ -108,35 +109,77 @@ public class SchedaFragment extends Fragment {
         if (medicina.getNote().length() > 0) {
             mNote.setText(medicina.getNote());
         }
-        mConfezioni.setText(String.valueOf(medicina.getConfezioni()));
+        confezioni = medicina.getConfezioni();
+        mConfezioni.setText(String.valueOf(confezioni));
     }
 
     private void clickListeners() {
         btnAddHome.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                //TODO: aggiunge a lista home
             }
         });
 
-        btnEdit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
+        btnEdit.setOnClickListener(v -> {
+            mNote.setEnabled(true);
+            mConfezioni.setEnabled(true);
+            mTotale.setEnabled(true);
+            btnAddHome.setVisibility(View.GONE);
+            btnArchivia.setVisibility(View.GONE);
+            btnEdit.setVisibility(View.GONE);
+            btnDelete.setVisibility(View.GONE);
+            btnOK.setVisibility(View.VISIBLE);
+            btnAnnulla.setVisibility(View.VISIBLE);
         });
 
-        btnDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
+        btnAnnulla.setOnClickListener(v -> {
+            mNote.setEnabled(false);
+            mConfezioni.setEnabled(false);
+            mTotale.setEnabled(false);
+            btnAddHome.setVisibility(View.VISIBLE);
+            btnArchivia.setVisibility(View.VISIBLE);
+            btnEdit.setVisibility(View.VISIBLE);
+            btnDelete.setVisibility(View.VISIBLE);
+            btnOK.setVisibility(View.GONE);
+            btnAnnulla.setVisibility(View.GONE);
         });
 
-        btnPrendi.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        btnOK.setOnClickListener(v -> {
+            medicina.setNote(mNote.getText().toString());
+            medicina.setConfezioni(confezioni);
+            medicina.setTotale(totale);
+            mNote.setEnabled(false);
+            mConfezioni.setEnabled(false);
+            mTotale.setEnabled(false);
+            btnAddHome.setVisibility(View.VISIBLE);
+            btnArchivia.setVisibility(View.VISIBLE);
+            btnEdit.setVisibility(View.VISIBLE);
+            btnDelete.setVisibility(View.VISIBLE);
+            btnOK.setVisibility(View.GONE);
+            btnAnnulla.setVisibility(View.GONE);
+            ((MainActivity) requireActivity()).SalvaArmadietto();
+        });
 
+        btnDelete.setOnClickListener(v -> {
+            viewModel.RemoveMedicina(medicina);
+            getParentFragmentManager().beginTransaction().replace(R.id.fragmentHost, ArmadiettoFragment.class, null).commit();
+        });
+
+        btnPrendi.setOnClickListener(v -> {
+            totale--;
+            mTotale.setText(String.valueOf(totale));
+            medicina.setTotale(totale);
+            if (totale == 0) {
+                btnPrendi.setVisibility(View.GONE);
+                mConfezioni.setText(String.valueOf(0));
+                medicina.setConfezioni(0);
+            } else {
+                if (totale % medicina.getQuantita() == 0) {
+                    confezioni--;
+                    mConfezioni.setText(String.valueOf(confezioni));
+                    medicina.setConfezioni(confezioni);
+                }
             }
         });
 
@@ -144,7 +187,6 @@ public class SchedaFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //TODO: setta medicina come archiviate e apre fragmentArchivio
-                //TODO: aggiornare viewholder o listadapter per archivio, deve aprire fragmentscheda differente
             }
         });
     }

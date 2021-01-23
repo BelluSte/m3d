@@ -10,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import belluste.medicine.R;
-import belluste.medicine.SchedaArchivioFragment;
 import belluste.medicine.SchedaFragment;
 
 public class MedViewHolder extends RecyclerView.ViewHolder {

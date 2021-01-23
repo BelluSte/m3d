@@ -48,4 +48,9 @@ public class ArmadiettoViewModel extends ViewModel {
     public MedArchiviata getMedArchiviata(int posizione) {
         return archivio.getContenuto().get(posizione);
     }
+
+    public void RemoveMedicina(Medicina medicina) {
+        armadietto.removeMedicina(medicina);
+        contenutoAttivi.setValue(armadietto.getContenuto());
+    }
 }

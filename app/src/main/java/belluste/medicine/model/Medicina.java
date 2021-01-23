@@ -15,6 +15,7 @@ public class Medicina implements Parcelable {
     private final String mScadenza;
     private String mNote;
     private final String mDataAgg;
+    private int mTotale = 0;
 
     public Medicina(String nome, String tipo, int confezioni, int quantita, String scadenza, String note, String dataAgg) {
         this.mNome = nome;
@@ -24,6 +25,9 @@ public class Medicina implements Parcelable {
         this.mScadenza = scadenza;
         this.mNote = note;
         this.mDataAgg = dataAgg;
+        if (quantita != -1) {
+            this.mTotale = confezioni * quantita;
+        }
     }
 
     protected Medicina(Parcel in) {
@@ -34,6 +38,7 @@ public class Medicina implements Parcelable {
         mScadenza = in.readString();
         mNote = in.readString();
         mDataAgg = in.readString();
+        mTotale = in.readInt();
     }
 
     public static final Creator<Medicina> CREATOR = new Creator<Medicina>() {
@@ -84,6 +89,14 @@ public class Medicina implements Parcelable {
         return mDataAgg;
     }
 
+    public int getTotale() {
+        return mTotale;
+    }
+
+    public void setTotale(int mTotale) {
+        this.mTotale = mTotale;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -112,6 +125,7 @@ public class Medicina implements Parcelable {
         dest.writeString(mScadenza);
         dest.writeString(mNote);
         dest.writeString(mDataAgg);
+        dest.writeInt(mTotale);
     }
 
     //comparator per ordinare per nome

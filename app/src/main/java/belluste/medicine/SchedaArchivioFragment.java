@@ -6,16 +6,18 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
+import belluste.medicine.model.ArcInfoListAdapter;
 import belluste.medicine.model.ArmadiettoViewModel;
-import belluste.medicine.model.Medicina;
+import belluste.medicine.model.MedArchiviata;
 
 
 public class SchedaArchivioFragment extends Fragment {
@@ -24,11 +26,11 @@ public class SchedaArchivioFragment extends Fragment {
 
     private int mPos;
     private ArmadiettoViewModel viewModel;
-    private Medicina medicina;
+    private MedArchiviata medicina;
 
-    private TextView mNome, mTipo, mQuantita, mDate;
-    private EditText mNote;
-    private Button btnEdit, btnDelete;
+    private TextView mNome, mTipo, mQuantita;
+    private Button btnDelete;
+    private RecyclerView rvInfo;
 
     public SchedaArchivioFragment() {
     }
@@ -61,17 +63,30 @@ public class SchedaArchivioFragment extends Fragment {
 
         initUI(view);
 
+        btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO: cancellare medarchiviata
+            }
+        });
+
         viewModel = new ViewModelProvider(requireActivity()).get(ArmadiettoViewModel.class);
-        medicina = viewModel.getMedicina(mPos);
+        medicina = viewModel.getMedArchiviata(mPos);
+
+        mNome.setText(medicina.getNome());
+        mTipo.setText(medicina.getTipo());
+        mQuantita.setText(medicina.getQuantita());
+
+        rvInfo.setLayoutManager(new LinearLayoutManager(getContext()));
+        ArcInfoListAdapter adapter = new ArcInfoListAdapter(medicina.getInfo());
+        rvInfo.setAdapter(adapter);
     }
 
     private void initUI(View v) {
         mNome = v.findViewById(R.id.tv_scheda_arc_nome);
         mTipo = v.findViewById(R.id.tv_scheda_arc_tipo);
         mQuantita = v.findViewById(R.id.tv_scheda_arc_quantita);
-        mNote = v.findViewById(R.id.et_scheda_arc_note);
-        btnEdit = v.findViewById(R.id.btn_edit_arc);
         btnDelete = v.findViewById(R.id.btn_delete_arc);
-        mDate = v.findViewById(R.id.tv_data_agg);
+        rvInfo = v.findViewById(R.id.rv_lista_info_med_archiviata);
     }
 }
