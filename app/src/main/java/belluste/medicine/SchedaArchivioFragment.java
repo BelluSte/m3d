@@ -1,5 +1,6 @@
 package belluste.medicine;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -63,11 +64,17 @@ public class SchedaArchivioFragment extends Fragment {
 
         initUI(view);
 
-        btnDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO: cancellare medarchiviata
-            }
+        btnDelete.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle(R.string.sei_sicuro)
+                    .setMessage(R.string.messaggio_cancella_medarchiviata)
+                    .setCancelable(false)
+                    .setNegativeButton(R.string.no, (dialog, which) -> dialog.cancel())
+                    .setPositiveButton(R.string.si, (dialog, which) -> {
+                        CancellaMedArchiviata();
+                        dialog.dismiss();
+                    });
+            builder.create().show();
         });
 
         viewModel = new ViewModelProvider(requireActivity()).get(ArmadiettoViewModel.class);
@@ -88,5 +95,11 @@ public class SchedaArchivioFragment extends Fragment {
         mQuantita = v.findViewById(R.id.tv_scheda_arc_quantita);
         btnDelete = v.findViewById(R.id.btn_delete_arc);
         rvInfo = v.findViewById(R.id.rv_lista_info_med_archiviata);
+    }
+
+    public void CancellaMedArchiviata() {
+        viewModel.RemoveMedArchiviata(medicina);
+        ((MainActivity) requireActivity()).SalvaArchivio();
+        getParentFragmentManager().beginTransaction().replace(R.id.fragmentHost, ArchivioFragment.class, null).commit();
     }
 }

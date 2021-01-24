@@ -24,8 +24,6 @@ import belluste.medicine.model.MedArchiviata;
 
 public class ArchivioFragment extends Fragment {
 
-    private ArmadiettoViewModel viewModel;
-
     public ArchivioFragment() {
         super(R.layout.fragment_archivio);
     }
@@ -48,7 +46,7 @@ public class ArchivioFragment extends Fragment {
         TextView EmptyTV = view.findViewById(R.id.tv_empty_archivio);
         RecyclerView ArchivioRV = view.findViewById(R.id.rv_archivio);
 
-        viewModel = new ViewModelProvider(requireActivity()).get(ArmadiettoViewModel.class);
+        ArmadiettoViewModel viewModel = new ViewModelProvider(requireActivity()).get(ArmadiettoViewModel.class);
 
         ArcListAdapter adapter = new ArcListAdapter();
         ArchivioRV.setLayoutManager(new LinearLayoutManager(getContext()));

@@ -43,4 +43,7 @@
     <string name="aggiunto_in_archivio_in_data">Aggiunto in archivio in data:</string>
     <string name="aggiunto">Aggiunto</string>
     <string name="archiviato_minuscolo">Archiviato</string>
+    <string name="si">Si</string>
+    <string name="sei_sicuro">Sei sicuro?</string>
+    <string name="messaggio_cancella_medarchiviata">Verranno cancellate tutte le informazioni</string>
 </resources>

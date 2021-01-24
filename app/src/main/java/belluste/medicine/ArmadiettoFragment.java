@@ -27,8 +27,6 @@ import belluste.medicine.model.Medicina;
 
 public class ArmadiettoFragment extends Fragment {
 
-    private ArmadiettoViewModel viewModel;
-
     public ArmadiettoFragment() {
         super(R.layout.fragment_armadietto);
     }
@@ -52,7 +50,7 @@ public class ArmadiettoFragment extends Fragment {
         TextView EmptyTV = view.findViewById(R.id.tv_empty_armadietto);
         RecyclerView ArmadiettoRV = view.findViewById(R.id.rv_armadietto);
 
-        viewModel = new ViewModelProvider(requireActivity()).get(ArmadiettoViewModel.class);
+        ArmadiettoViewModel viewModel = new ViewModelProvider(requireActivity()).get(ArmadiettoViewModel.class);
 
         MedListAdapter adapter = new MedListAdapter();
         ArmadiettoRV.setLayoutManager(new LinearLayoutManager(getContext()));

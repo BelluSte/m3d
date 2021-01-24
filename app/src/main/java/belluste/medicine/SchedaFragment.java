@@ -1,5 +1,6 @@
 package belluste.medicine;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,6 +15,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 import belluste.medicine.model.ArmadiettoViewModel;
 import belluste.medicine.model.Medicina;
 
@@ -25,6 +31,7 @@ public class SchedaFragment extends Fragment {
     private int mPos, totale, confezioni;
     private ArmadiettoViewModel viewModel;
     private Medicina medicina;
+    private String myFormat;
 
     private TextView mNome, mTipo, mQuantita, mScadenza, mTestoQuant, mTestoTot;
     private EditText mNote, mConfezioni, mTotale;
@@ -66,6 +73,8 @@ public class SchedaFragment extends Fragment {
         medicina = viewModel.getMedicina(mPos);
 
         compilaScheda();
+
+        myFormat = getString(R.string.day_format);
     }
 
     private void initUI(View v) {
@@ -162,8 +171,15 @@ public class SchedaFragment extends Fragment {
         });
 
         btnDelete.setOnClickListener(v -> {
-            viewModel.RemoveMedicina(medicina);
-            getParentFragmentManager().beginTransaction().replace(R.id.fragmentHost, ArmadiettoFragment.class, null).commit();
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle(R.string.sei_sicuro)
+                    .setCancelable(false)
+                    .setNegativeButton(R.string.no, (dialog, which) -> dialog.cancel())
+                    .setPositiveButton(R.string.si, (dialog, which) -> {
+                        CancellaMedicina();
+                        dialog.dismiss();
+                    });
+            builder.create().show();
         });
 
         btnPrendi.setOnClickListener(v -> {
@@ -181,13 +197,35 @@ public class SchedaFragment extends Fragment {
                     medicina.setConfezioni(confezioni);
                 }
             }
+            ((MainActivity) requireActivity()).SalvaArmadietto();
         });
 
-        btnArchivia.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO: setta medicina come archiviate e apre fragmentArchivio
-            }
+        btnArchivia.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle(R.string.sei_sicuro)
+                    .setCancelable(false)
+                    .setNegativeButton(R.string.no, (dialog, which) -> dialog.cancel())
+                    .setPositiveButton(R.string.si, (dialog, which) -> {
+                        ArchiviaMedicina();
+                        dialog.dismiss();
+                    });
+            builder.create().show();
         });
+    }
+
+    public void CancellaMedicina() {
+        viewModel.RemoveMedicina(medicina);
+        ((MainActivity) requireActivity()).SalvaArmadietto();
+        getParentFragmentManager().beginTransaction().replace(R.id.fragmentHost, ArmadiettoFragment.class, null).commit();
+    }
+
+    public void ArchiviaMedicina() {
+        Date data = Calendar.getInstance().getTime();
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.ITALY);
+        String dataArc = sdf.format(data);
+        viewModel.ArchiviaMedicina(medicina, dataArc);
+        ((MainActivity) requireActivity()).SalvaArmadietto();
+        ((MainActivity) requireActivity()).SalvaArchivio();
+        getParentFragmentManager().beginTransaction().replace(R.id.fragmentHost, ArchivioFragment.class, null).commit();
     }
 }

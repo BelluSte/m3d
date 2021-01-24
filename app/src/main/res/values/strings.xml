@@ -49,4 +49,8 @@
     <string name="aggiunto_in_archivio_in_data">Added to archive on:</string>
     <string name="aggiunto">Added on</string>
     <string name="archiviato_minuscolo">Archived on</string>
+    <string name="si">Yes</string>
+    <string name="no" translatable="false">No</string>
+    <string name="sei_sicuro">Are you sure?</string>
+    <string name="messaggio_cancella_medarchiviata">All information will be deleted</string>
 </resources>

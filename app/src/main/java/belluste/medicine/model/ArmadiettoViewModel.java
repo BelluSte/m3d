@@ -53,4 +53,17 @@ public class ArmadiettoViewModel extends ViewModel {
         armadietto.removeMedicina(medicina);
         contenutoAttivi.setValue(armadietto.getContenuto());
     }
+
+    public void ArchiviaMedicina(Medicina medicina, String dataArc) {
+        MedArchiviata med = new MedArchiviata(medicina, dataArc);
+        armadietto.removeMedicina(medicina);
+        contenutoAttivi.setValue(armadietto.getContenuto());
+        archivio.addMed(med);
+        contenutoArchiviati.setValue(archivio.getContenuto());
+    }
+
+    public void RemoveMedArchiviata(MedArchiviata med) {
+        archivio.removeMed(med);
+        contenutoArchiviati.setValue(archivio.getContenuto());
+    }
 }
