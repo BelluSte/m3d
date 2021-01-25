@@ -46,4 +46,5 @@
     <string name="si">Si</string>
     <string name="sei_sicuro">Sei sicuro?</string>
     <string name="messaggio_cancella_medarchiviata">Verranno cancellate tutte le informazioni</string>
+    <string name="vedi_note">click per vedere note</string>
 </resources>

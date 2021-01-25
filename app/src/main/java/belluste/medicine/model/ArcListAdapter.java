@@ -3,13 +3,16 @@ package belluste.medicine.model;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.DiffUtil;
-import androidx.recyclerview.widget.ListAdapter;
+import androidx.recyclerview.widget.RecyclerView;
 
-public class ArcListAdapter extends ListAdapter<MedArchiviata, ArcViewHolder> {
+import java.util.LinkedList;
 
-    public ArcListAdapter() {
-        super(MEDARC_ITEM_CALLBACK);
+public class ArcListAdapter extends RecyclerView.Adapter<ArcViewHolder> {
+
+    private final LinkedList<MedArchiviata> lista;
+
+    public ArcListAdapter(LinkedList<MedArchiviata> lista) {
+        this.lista = lista;
     }
 
     @NonNull
@@ -20,19 +23,12 @@ public class ArcListAdapter extends ListAdapter<MedArchiviata, ArcViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ArcViewHolder holder, int position) {
-        holder.bind(getItem(position).getNome(), getItem(position).getTipo());
+        holder.bind(lista.get(position).getNome(), lista.get(position).getTipo());
     }
 
-    public static final DiffUtil.ItemCallback<MedArchiviata> MEDARC_ITEM_CALLBACK = new DiffUtil.ItemCallback<MedArchiviata>() {
-        @Override
-        public boolean areItemsTheSame(@NonNull MedArchiviata oldItem, @NonNull MedArchiviata newItem) {
-            return oldItem == newItem;
-        }
-
-        @Override
-        public boolean areContentsTheSame(@NonNull MedArchiviata oldItem, @NonNull MedArchiviata newItem) {
-            return oldItem.equals(newItem);
-        }
-    };
+    @Override
+    public int getItemCount() {
+        return lista.size();
+    }
 
 }

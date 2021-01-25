@@ -31,7 +31,7 @@
             android:id="@+id/tv_scheda_arc_tipo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="16dp"
             android:text="@string/tipo"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -123,20 +123,8 @@
             android:text="@string/archiviato_minuscolo"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/textView12"
-            app:layout_constraintEnd_toStartOf="@+id/textView16"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/textView12" />
-
-        <TextView
-            android:id="@+id/textView16"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/note"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/textView15"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/textView15" />
+            app:layout_constraintStart_toEndOf="@+id/textView12" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

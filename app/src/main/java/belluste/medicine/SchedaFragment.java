@@ -226,6 +226,7 @@ public class SchedaFragment extends Fragment {
         viewModel.ArchiviaMedicina(medicina, dataArc);
         ((MainActivity) requireActivity()).SalvaArmadietto();
         ((MainActivity) requireActivity()).SalvaArchivio();
+        ((MainActivity) requireActivity()).InArchivio();
         getParentFragmentManager().beginTransaction().replace(R.id.fragmentHost, ArchivioFragment.class, null).commit();
     }
 }

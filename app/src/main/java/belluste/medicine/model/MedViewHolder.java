@@ -23,7 +23,7 @@ public class MedViewHolder extends RecyclerView.ViewHolder {
             mPosition = getAdapterPosition();
             AppCompatActivity activity = (AppCompatActivity) v.getContext();
             SchedaFragment scheda = SchedaFragment.newInstance(mPosition);
-            activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragmentHost, scheda, "scheda").commit();
+            activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragmentHost, scheda).commit();
         });
         tvNome = itemView.findViewById(R.id.tv_item_nome);
         tvTipo = itemView.findViewById(R.id.tv_item_tipo);

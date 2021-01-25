@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,7 +30,7 @@ public class SchedaArchivioFragment extends Fragment {
     private ArmadiettoViewModel viewModel;
     private MedArchiviata medicina;
 
-    private TextView mNome, mTipo, mQuantita;
+    private TextView mNome, mTipo, mQuantita, mTestoQuant;
     private Button btnDelete;
     private RecyclerView rvInfo;
 
@@ -82,17 +83,25 @@ public class SchedaArchivioFragment extends Fragment {
 
         mNome.setText(medicina.getNome());
         mTipo.setText(medicina.getTipo());
-        mQuantita.setText(medicina.getQuantita());
+        if (medicina.getQuantita() != -1) {
+            mQuantita.setText(String.valueOf(medicina.getQuantita()));
+        } else {
+            mTestoQuant.setVisibility(View.GONE);
+            mQuantita.setVisibility(View.GONE);
+        }
 
         rvInfo.setLayoutManager(new LinearLayoutManager(getContext()));
         ArcInfoListAdapter adapter = new ArcInfoListAdapter(medicina.getInfo());
         rvInfo.setAdapter(adapter);
+        DividerItemDecoration divider = new DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL);
+        rvInfo.addItemDecoration(divider);
     }
 
     private void initUI(View v) {
         mNome = v.findViewById(R.id.tv_scheda_arc_nome);
         mTipo = v.findViewById(R.id.tv_scheda_arc_tipo);
         mQuantita = v.findViewById(R.id.tv_scheda_arc_quantita);
+        mTestoQuant = v.findViewById(R.id.tv_scatola_da_2);
         btnDelete = v.findViewById(R.id.btn_delete_arc);
         rvInfo = v.findViewById(R.id.rv_lista_info_med_archiviata);
     }

@@ -55,7 +55,10 @@ public class ArmadiettoFragment extends Fragment {
         MedListAdapter adapter = new MedListAdapter();
         ArmadiettoRV.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        final Observer<LinkedList<Medicina>> observer = adapter::submitList;
+        final Observer<LinkedList<Medicina>> observer = lista -> {
+            adapter.submitList(null);
+            adapter.submitList(lista);
+        };
         viewModel.getAttivi().observe(getViewLifecycleOwner(), observer);
 
         ArmadiettoRV.setAdapter(adapter);

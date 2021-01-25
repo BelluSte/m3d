@@ -40,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
     private Archivio archivio;
     private Gson gson;
 
+    private Button homeBtn, armadiettoBtn, archivioBtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,14 +52,15 @@ public class MainActivity extends AppCompatActivity {
         preferences = getSharedPreferences(PREF, MODE_PRIVATE);
         gson = new Gson();
 
+        initUI();
+
         if (savedInstanceState == null) {
             fragmentManager.beginTransaction()
                     .setReorderingAllowed(true)
                     .add(R.id.fragmentHost, HomeFragment.class, null, "home")
                     .commit();
+            homeBtn.setBackgroundColor(getResources().getColor(R.color.teal_200));
         }
-
-        initUI();
 
         //recupera armadietto salvato
         String armadiettoString = preferences.getString(ARMADIETTO, null);
@@ -81,22 +84,25 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initUI() {
-        Button homeBtn = findViewById(R.id.homeButton);
+        homeBtn = findViewById(R.id.homeButton);
         homeBtn.setOnClickListener(v -> {
             if (fragmentManager.findFragmentByTag("home") == null) {
                 fragmentManager.beginTransaction().replace(R.id.fragmentHost, HomeFragment.class, null, "home").commit();
+                InHome();
             }
         });
-        Button armadiettoBtn = findViewById(R.id.armadiettoButton);
+        armadiettoBtn = findViewById(R.id.armadiettoButton);
         armadiettoBtn.setOnClickListener(v -> {
             if (fragmentManager.findFragmentByTag("armadietto") == null) {
                 fragmentManager.beginTransaction().replace(R.id.fragmentHost, ArmadiettoFragment.class, null, "armadietto").commit();
+                InArmadietto();
             }
         });
-        Button archivioBtn = findViewById(R.id.archivioButton);
+        archivioBtn = findViewById(R.id.archivioButton);
         archivioBtn.setOnClickListener(v -> {
             if (fragmentManager.findFragmentByTag("archivio") == null) {
                 fragmentManager.beginTransaction().replace(R.id.fragmentHost, ArchivioFragment.class, null, "archivio").commit();
+                InArchivio();
             }
         });
 
@@ -114,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
             Medicina medicina = data.getParcelableExtra(EXTRA_MEDICINA);
             if(armadietto.addMedicina(medicina)) {
                 Toast.makeText(this, R.string.medicina_aggiunta, Toast.LENGTH_LONG).show();
-                viewModel.SetContenutoArmadietto(armadietto);
+                viewModel.MedicinaAggiunta();
                 SalvaArmadietto();
             } else {
                 Toast.makeText(this, R.string.medicina_gia_presente, Toast.LENGTH_LONG).show();
@@ -134,5 +140,23 @@ public class MainActivity extends AppCompatActivity {
         String daSalvare = gson.toJson(archivio.getContenuto());
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(ARCHIVIO, daSalvare).apply();
+    }
+
+    public void InHome() {
+        homeBtn.setBackgroundColor(getResources().getColor(R.color.teal_200));
+        armadiettoBtn.setBackgroundColor(getResources().getColor(R.color.teal_700));
+        archivioBtn.setBackgroundColor(getResources().getColor(R.color.teal_700));
+    }
+
+    public void InArmadietto() {
+        homeBtn.setBackgroundColor(getResources().getColor(R.color.teal_700));
+        armadiettoBtn.setBackgroundColor(getResources().getColor(R.color.teal_200));
+        archivioBtn.setBackgroundColor(getResources().getColor(R.color.teal_700));
+    }
+
+    public void InArchivio() {
+        homeBtn.setBackgroundColor(getResources().getColor(R.color.teal_700));
+        armadiettoBtn.setBackgroundColor(getResources().getColor(R.color.teal_700));
+        archivioBtn.setBackgroundColor(getResources().getColor(R.color.teal_200));
     }
 }

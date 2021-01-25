@@ -53,4 +53,6 @@
     <string name="no" translatable="false">No</string>
     <string name="sei_sicuro">Are you sure?</string>
     <string name="messaggio_cancella_medarchiviata">All information will be deleted</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="vedi_note">click for expand info</string>
 </resources>

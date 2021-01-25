@@ -10,7 +10,6 @@ import java.util.LinkedList;
 public class ArmadiettoViewModel extends ViewModel {
 
     private final MutableLiveData<LinkedList<Medicina>> contenutoAttivi = new MutableLiveData<>();
-    private final MutableLiveData<LinkedList<MedArchiviata>> contenutoArchiviati = new MutableLiveData<>();
 
     private Armadietto armadietto;
     private Archivio archivio;
@@ -21,16 +20,15 @@ public class ArmadiettoViewModel extends ViewModel {
     }
 
     public void SetContenutoArchivio(Archivio archivio) {
-        contenutoArchiviati.setValue(archivio.getContenuto());
         this.archivio = archivio;
+    }
+
+    public void MedicinaAggiunta() {
+        contenutoAttivi.setValue(armadietto.getContenuto());
     }
 
     public LiveData<LinkedList<Medicina>> getAttivi() {
         return contenutoAttivi;
-    }
-
-    public LiveData<LinkedList<MedArchiviata>> getArchiviati() {
-        return contenutoArchiviati;
     }
 
     public LinkedList<Medicina> listaAttivi() {
@@ -38,7 +36,7 @@ public class ArmadiettoViewModel extends ViewModel {
     }
 
     public LinkedList<MedArchiviata> listaArchiviati() {
-        return contenutoArchiviati.getValue();
+        return archivio.getContenuto();
     }
 
     public Medicina getMedicina(int posizione) {
@@ -59,11 +57,9 @@ public class ArmadiettoViewModel extends ViewModel {
         armadietto.removeMedicina(medicina);
         contenutoAttivi.setValue(armadietto.getContenuto());
         archivio.addMed(med);
-        contenutoArchiviati.setValue(archivio.getContenuto());
     }
 
     public void RemoveMedArchiviata(MedArchiviata med) {
         archivio.removeMed(med);
-        contenutoArchiviati.setValue(archivio.getContenuto());
     }
 }

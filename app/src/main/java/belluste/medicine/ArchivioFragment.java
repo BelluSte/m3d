@@ -5,7 +5,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -15,11 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.LinkedList;
-
 import belluste.medicine.model.ArcListAdapter;
 import belluste.medicine.model.ArmadiettoViewModel;
-import belluste.medicine.model.MedArchiviata;
 
 
 public class ArchivioFragment extends Fragment {
@@ -48,13 +44,10 @@ public class ArchivioFragment extends Fragment {
 
         ArmadiettoViewModel viewModel = new ViewModelProvider(requireActivity()).get(ArmadiettoViewModel.class);
 
-        ArcListAdapter adapter = new ArcListAdapter();
+        ArcListAdapter adapter = new ArcListAdapter(viewModel.listaArchiviati());
         ArchivioRV.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        final Observer<LinkedList<MedArchiviata>> observer = adapter::submitList;
-        viewModel.getArchiviati().observe(getViewLifecycleOwner(), observer);
-
         ArchivioRV.setAdapter(adapter);
+
         if (viewModel.listaArchiviati().size()>0) {
             EmptyTV.setVisibility(View.GONE);
         }
