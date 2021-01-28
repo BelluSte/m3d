@@ -8,7 +8,6 @@
     <string name="impostazioni">Impostazioni</string>
     <string name="nessuna_medicina_in_archivio">Nessuna medicina in archivio</string>
     <string name="armadietto_delle_medicine_vuoto">Armadietto delle medicine vuoto</string>
-    <string name="al_momento_non_stai_assumendo_medicine">Al momento non stai assumendo medicine</string>
     <string name="completa_tutti_campi">Completa correttamente tutti i campi</string>
     <string name="nessuna_nota">Nessuna nota</string>
     <string name="aggiungi_all_armadietto">AGGIUNGI ALL\'ARMADIETTO</string>
@@ -24,7 +23,7 @@
     <string name="crema">Crema</string>
     <string name="sciroppo">Sciroppo</string>
     <string name="vari">Vari</string>
-    <string name="medicina_aggiunta"> Medicina aggiunta con successo</string>
+    <string name="operazione_completata"> Medicina aggiunta con successo</string>
     <string name="medicina_gia_presente">Medicina già presente o in archivio</string>
     <string name="annullato">Operazione annullata</string>
     <string name="confezione_da">confezione da:</string>
@@ -37,7 +36,7 @@
     <string name="modifica">MODIFICA</string>
     <string name="cancella">CANCELLA</string>
     <string name="prendi_1">PRENDI 1</string>
-    <string name="add_to_home">AGGIUNGI A HOME</string>
+    <string name="add_to_home">AGGIUNGI SCORCIATOIA ALLA HOME</string>
     <string name="archivia">ARCHIVIA</string>
     <string name="archiviato">ARCHIVIATO</string>
     <string name="aggiunto_in_archivio_in_data">Aggiunto in archivio in data:</string>
@@ -47,4 +46,11 @@
     <string name="sei_sicuro">Sei sicuro?</string>
     <string name="messaggio_cancella_medarchiviata">Verranno cancellate tutte le informazioni</string>
     <string name="vedi_note">click per vedere note</string>
+    <string name="doppio_back">Premi nuovamente il tasto INDIETRO per chiudere l\'app</string>
+    <string name="versione_app">Versione APP:</string>
+    <string name="reset_armadietto">CANCELLA TUTTO DA ARMADIETTO</string>
+    <string name="reset_archivio">CANCELLA TUTTO DA ARCHIVIO</string>
+    <string name="home_vuota">Nessuna scorciatoia aggiunta</string>
+    <string name="avviso_reset_armadietto">Confermando questa operazione tutte le medicine salvate nel tuo armadietto verranno eliminate. Il processo è irreversibile</string>
+    <string name="avviso_reset_archivio">Confermando questa operazione l\'archivio verrà azzerato. Il processo è irreversibile</string>
 </resources>

@@ -62,4 +62,13 @@ public class ArmadiettoViewModel extends ViewModel {
     public void RemoveMedArchiviata(MedArchiviata med) {
         archivio.removeMed(med);
     }
+
+    public void SvuotaArmadietto() {
+        armadietto.removeAll();
+        contenutoAttivi.setValue(armadietto.getContenuto());
+    }
+
+    public void SvuotaArchivio() {
+        archivio.removeAll();
+    }
 }

@@ -5,7 +5,6 @@
     <string name="armadietto">Locker</string>
     <string name="archivio">Archive</string>
     <string name="impostazioni">Settings</string>
-    <string name="al_momento_non_stai_assumendo_medicine">You are not taking medicines</string>
     <string name="armadietto_delle_medicine_vuoto">Medicine locker is empty</string>
     <string name="nessuna_medicina_in_archivio">No medicine on archive</string>
     <string name="add_medicine" translatable="false">add medicine</string>
@@ -27,7 +26,7 @@
     <string name="crema">Cream</string>
     <string name="sciroppo">Syrup</string>
     <string name="vari">Others</string>
-    <string name="medicina_aggiunta">Operation successfully complete</string>
+    <string name="operazione_completata">Operation successfully complete</string>
     <string name="medicina_gia_presente">Medicine already exists</string>
     <string name="annullato">Operation canceled</string>
     <string name="tipo" translatable="false">Tipo</string>
@@ -41,10 +40,9 @@
     <string name="modifica">EDIT</string>
     <string name="cancella">DELETE</string>
     <string name="prendi_1">TAKE 1</string>
-    <string name="add_to_home">ADD TO HOME</string>
+    <string name="add_to_home">ADD SHORTCUT TO HOME</string>
     <string name="archivia">ADD TO ARCHIVE</string>
     <string name="archiviato">ARCHIVED</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="date" translatable="false">Date</string>
     <string name="aggiunto_in_archivio_in_data">Added to archive on:</string>
     <string name="aggiunto">Added on</string>
@@ -53,6 +51,15 @@
     <string name="no" translatable="false">No</string>
     <string name="sei_sicuro">Are you sure?</string>
     <string name="messaggio_cancella_medarchiviata">All information will be deleted</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="vedi_note">click for expand info</string>
+    <string name="doppio_back">Press BACK key again to close the app</string>
+    <string name="info_icon" translatable="false">info icon</string>
+    <string name="info" translatable="false">INFO</string>
+    <string name="privacy_policy" translatable="false">privacy policy</string>
+    <string name="versione_app">APP version:</string>
+    <string name="reset_armadietto">DELETE ALL LOCKER</string>
+    <string name="reset_archivio">DELETE ALL ARCHIVE</string>
+    <string name="home_vuota">No shortcuts added</string>
+    <string name="avviso_reset_armadietto">If you confirm this operation, all medicines saved in your locker will be deleted. The process is irreversible</string>
+    <string name="avviso_reset_archivio">If you confirm this operation the archive will be reset. The process is irreversible</string>
 </resources>

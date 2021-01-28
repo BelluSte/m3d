@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:text="@string/al_momento_non_stai_assumendo_medicine"
+        android:text="@string/home_vuota"
         android:textAlignment="center"
         android:textSize="24sp"
         tools:ignore="RtlCompat" />

@@ -17,7 +17,7 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/infoButton_land"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <Button
@@ -47,7 +47,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent" >
+
+    </androidx.fragment.app.FragmentContainerView>
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
@@ -69,6 +71,20 @@
     app:layout_constraintBottom_toBottomOf="@+id/fragmentHost"
     app:layout_constraintEnd_toEndOf="parent"
     app:srcCompat="@android:drawable/ic_input_add" />
+
+    <Button
+        android:id="@+id/infoButton_land"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:onClick="OpenAppInfo"
+        android:text="@string/info"
+        android:textStyle="italic"
+        app:backgroundTint="@android:color/darker_gray"
+        app:icon="@android:drawable/ic_menu_info_details"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

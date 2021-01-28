@@ -37,4 +37,8 @@ public class Archivio {
     public void removeMed(MedArchiviata med) {
         contenuto.remove(med);
     }
+
+    public void removeAll() {
+        contenuto.clear();
+    }
 }

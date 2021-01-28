@@ -1,5 +1,6 @@
 package belluste.medicine;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -8,6 +9,9 @@ import androidx.lifecycle.ViewModelProvider;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -39,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
     private Armadietto armadietto;
     private Archivio archivio;
     private Gson gson;
+    private boolean doubleBack;
+    private int selected;
 
     private Button homeBtn, armadiettoBtn, archivioBtn;
 
@@ -60,6 +66,16 @@ public class MainActivity extends AppCompatActivity {
                     .add(R.id.fragmentHost, HomeFragment.class, null, "home")
                     .commit();
             homeBtn.setBackgroundColor(getResources().getColor(R.color.teal_200));
+            selected = 1;
+        } else {
+            selected = savedInstanceState.getInt("selected");
+            if (selected == 1) {
+                homeBtn.setBackgroundColor(getResources().getColor(R.color.teal_200));
+            } else if (selected == 2) {
+                armadiettoBtn.setBackgroundColor(getResources().getColor(R.color.teal_200));
+            } else if (selected == 3) {
+                archivioBtn.setBackgroundColor(getResources().getColor(R.color.teal_200));
+            }
         }
 
         //recupera armadietto salvato
@@ -83,12 +99,30 @@ public class MainActivity extends AppCompatActivity {
         viewModel.SetContenutoArchivio(archivio);
     }
 
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("selected", selected);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBack) {
+            super.onBackPressed();
+        } else {
+            doubleBack = true;
+            Toast.makeText(this, R.string.doppio_back, Toast.LENGTH_SHORT).show();
+            new Handler(Looper.getMainLooper()).postDelayed(() -> doubleBack = false, 2000);
+        }
+    }
+
     private void initUI() {
         homeBtn = findViewById(R.id.homeButton);
         homeBtn.setOnClickListener(v -> {
             if (fragmentManager.findFragmentByTag("home") == null) {
                 fragmentManager.beginTransaction().replace(R.id.fragmentHost, HomeFragment.class, null, "home").commit();
                 InHome();
+                selected = 1;
             }
         });
         armadiettoBtn = findViewById(R.id.armadiettoButton);
@@ -96,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
             if (fragmentManager.findFragmentByTag("armadietto") == null) {
                 fragmentManager.beginTransaction().replace(R.id.fragmentHost, ArmadiettoFragment.class, null, "armadietto").commit();
                 InArmadietto();
+                selected = 2;
             }
         });
         archivioBtn = findViewById(R.id.archivioButton);
@@ -103,6 +138,7 @@ public class MainActivity extends AppCompatActivity {
             if (fragmentManager.findFragmentByTag("archivio") == null) {
                 fragmentManager.beginTransaction().replace(R.id.fragmentHost, ArchivioFragment.class, null, "archivio").commit();
                 InArchivio();
+                selected = 3;
             }
         });
 
@@ -119,7 +155,7 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode==REQUEST_CODE && resultCode==RESULT_OK && data!=null) {
             Medicina medicina = data.getParcelableExtra(EXTRA_MEDICINA);
             if(armadietto.addMedicina(medicina)) {
-                Toast.makeText(this, R.string.medicina_aggiunta, Toast.LENGTH_LONG).show();
+                Toast.makeText(this, R.string.operazione_completata, Toast.LENGTH_LONG).show();
                 viewModel.MedicinaAggiunta();
                 SalvaArmadietto();
             } else {
@@ -158,5 +194,15 @@ public class MainActivity extends AppCompatActivity {
         homeBtn.setBackgroundColor(getResources().getColor(R.color.teal_700));
         armadiettoBtn.setBackgroundColor(getResources().getColor(R.color.teal_700));
         archivioBtn.setBackgroundColor(getResources().getColor(R.color.teal_200));
+    }
+
+    public void OpenAppInfo(View view) {
+        if (fragmentManager.findFragmentByTag("info") == null) {
+            fragmentManager.beginTransaction().replace(R.id.fragmentHost, InfoAppFragment.class, null, "info").commit();
+            homeBtn.setBackgroundColor(getResources().getColor(R.color.teal_700));
+            armadiettoBtn.setBackgroundColor(getResources().getColor(R.color.teal_700));
+            archivioBtn.setBackgroundColor(getResources().getColor(R.color.teal_700));
+            selected = 0;
+        }
     }
 }

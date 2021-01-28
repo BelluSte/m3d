@@ -12,6 +12,7 @@
         android:id="@+id/homeButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
         android:layout_marginTop="8dp"
         android:text="@string/home"
         app:layout_constraintEnd_toStartOf="@+id/armadiettoButton"
@@ -24,6 +25,7 @@
         android:id="@+id/armadiettoButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:singleLine="true"
         android:text="@string/armadietto"
         app:layout_constraintBottom_toBottomOf="@+id/homeButton"
         app:layout_constraintEnd_toStartOf="@+id/archivioButton"
@@ -35,10 +37,11 @@
         android:id="@+id/archivioButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:singleLine="true"
         android:text="@string/archivio"
         app:layout_constraintBottom_toBottomOf="@+id/homeButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintEnd_toStartOf="@+id/infoButton"
         app:layout_constraintStart_toEndOf="@+id/armadiettoButton"
         app:layout_constraintTop_toTopOf="@+id/homeButton" />
 
@@ -55,6 +58,19 @@
         app:layout_constraintBottom_toBottomOf="@+id/fragmentHost"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/ic_input_add" />
+
+    <ImageButton
+        android:id="@+id/infoButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:background="@android:color/darker_gray"
+        android:contentDescription="@string/info_icon"
+        android:onClick="OpenAppInfo"
+        app:layout_constraintBottom_toBottomOf="@+id/archivioButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/archivioButton"
+        app:srcCompat="@android:drawable/ic_menu_info_details" />
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentHost"

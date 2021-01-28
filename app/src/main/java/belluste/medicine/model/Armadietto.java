@@ -36,6 +36,10 @@ public class Armadietto {
         contenuto.remove(medicina);
     }
 
+    public void removeAll() {
+        contenuto.clear();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
