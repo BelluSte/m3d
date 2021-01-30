@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 import java.util.LinkedList;
 
-import belluste.medicine.model.ArmadiettoViewModel;
+import belluste.medicine.model.AppViewModel;
 import belluste.medicine.model.MedListAdapter;
 import belluste.medicine.model.Medicina;
 
@@ -50,7 +50,7 @@ public class ArmadiettoFragment extends Fragment {
         TextView EmptyTV = view.findViewById(R.id.tv_empty_armadietto);
         RecyclerView ArmadiettoRV = view.findViewById(R.id.rv_armadietto);
 
-        ArmadiettoViewModel viewModel = new ViewModelProvider(requireActivity()).get(ArmadiettoViewModel.class);
+        AppViewModel viewModel = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
 
         MedListAdapter adapter = new MedListAdapter();
         ArmadiettoRV.setLayoutManager(new LinearLayoutManager(getContext()));

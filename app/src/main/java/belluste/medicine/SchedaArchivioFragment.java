@@ -18,7 +18,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import belluste.medicine.model.ArcInfoListAdapter;
-import belluste.medicine.model.ArmadiettoViewModel;
+import belluste.medicine.model.AppViewModel;
 import belluste.medicine.model.MedArchiviata;
 
 
@@ -27,7 +27,7 @@ public class SchedaArchivioFragment extends Fragment {
     private static final String POS = "belluste.medicine.posizione";
 
     private int mPos;
-    private ArmadiettoViewModel viewModel;
+    private AppViewModel viewModel;
     private MedArchiviata medicina;
 
     private TextView mNome, mTipo, mQuantita, mTestoQuant;
@@ -78,7 +78,7 @@ public class SchedaArchivioFragment extends Fragment {
             builder.create().show();
         });
 
-        viewModel = new ViewModelProvider(requireActivity()).get(ArmadiettoViewModel.class);
+        viewModel = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
         medicina = viewModel.getMedArchiviata(mPos);
 
         mNome.setText(medicina.getNome());

@@ -17,7 +17,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import belluste.medicine.model.ArmadiettoViewModel;
+import belluste.medicine.model.AppViewModel;
 
 
 public class InfoAppFragment extends Fragment {
@@ -45,7 +45,7 @@ public class InfoAppFragment extends Fragment {
         Button resetArmadiettoBtn = view.findViewById(R.id.btn_reset_armadietto);
         Button resetArchivioBtn = view.findViewById(R.id.btn_reset_archivio);
 
-        ArmadiettoViewModel viewModel = new ViewModelProvider(requireActivity()).get(ArmadiettoViewModel.class);
+        AppViewModel viewModel = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
 
         resetArmadiettoBtn.setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -56,6 +56,7 @@ public class InfoAppFragment extends Fragment {
                     .setPositiveButton(R.string.si, (dialog, which) -> {
                         viewModel.SvuotaArmadietto();
                         Toast.makeText(getContext(), R.string.operazione_completata, Toast.LENGTH_LONG).show();
+                        ((MainActivity)requireActivity()).SalvaArmadietto();
                         dialog.dismiss();
                     });
             builder.create().show();
@@ -70,13 +71,14 @@ public class InfoAppFragment extends Fragment {
                     .setPositiveButton(R.string.si, (dialog, which) -> {
                         viewModel.SvuotaArchivio();
                         Toast.makeText(getContext(), R.string.operazione_completata, Toast.LENGTH_LONG).show();
+                        ((MainActivity)requireActivity()).SalvaArchivio();
                         dialog.dismiss();
                     });
             builder.create().show();
         });
 
         try {
-            PackageInfo pInfo = getContext().getPackageManager().getPackageInfo(getContext().getPackageName(), 0);
+            PackageInfo pInfo = requireContext().getPackageManager().getPackageInfo(requireContext().getPackageName(), 0);
             String appVersion = pInfo.versionName;
             versioneTv.setText(appVersion);
         } catch (PackageManager.NameNotFoundException e) {

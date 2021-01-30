@@ -15,7 +15,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import belluste.medicine.model.ArcListAdapter;
-import belluste.medicine.model.ArmadiettoViewModel;
+import belluste.medicine.model.AppViewModel;
 
 
 public class ArchivioFragment extends Fragment {
@@ -42,7 +42,7 @@ public class ArchivioFragment extends Fragment {
         TextView EmptyTV = view.findViewById(R.id.tv_empty_archivio);
         RecyclerView ArchivioRV = view.findViewById(R.id.rv_archivio);
 
-        ArmadiettoViewModel viewModel = new ViewModelProvider(requireActivity()).get(ArmadiettoViewModel.class);
+        AppViewModel viewModel = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
 
         ArcListAdapter adapter = new ArcListAdapter(viewModel.listaArchiviati());
         ArchivioRV.setLayoutManager(new LinearLayoutManager(getContext()));

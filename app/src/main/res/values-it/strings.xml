@@ -53,4 +53,5 @@
     <string name="home_vuota">Nessuna scorciatoia aggiunta</string>
     <string name="avviso_reset_armadietto">Confermando questa operazione tutte le medicine salvate nel tuo armadietto verranno eliminate. Il processo è irreversibile</string>
     <string name="avviso_reset_archivio">Confermando questa operazione l\'archivio verrà azzerato. Il processo è irreversibile</string>
+    <string name="rimuovi_da_home">RIMUOVI DA HOME</string>
 </resources>

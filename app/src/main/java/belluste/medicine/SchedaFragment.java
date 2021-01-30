@@ -20,7 +20,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import belluste.medicine.model.ArmadiettoViewModel;
+import belluste.medicine.model.AppViewModel;
 import belluste.medicine.model.Medicina;
 
 
@@ -29,9 +29,10 @@ public class SchedaFragment extends Fragment {
     private static final String POS = "belluste.medicine.posizione";
 
     private int mPos, totale, confezioni;
-    private ArmadiettoViewModel viewModel;
+    private AppViewModel viewModel;
     private Medicina medicina;
     private String myFormat;
+    private boolean inHome;
 
     private TextView mNome, mTipo, mQuantita, mScadenza, mTestoQuant, mTestoTot;
     private EditText mNote, mConfezioni, mTotale;
@@ -69,10 +70,16 @@ public class SchedaFragment extends Fragment {
         initUI(view);
         clickListeners();
 
-        viewModel = new ViewModelProvider(requireActivity()).get(ArmadiettoViewModel.class);
+        viewModel = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
         medicina = viewModel.getMedicina(mPos);
 
         compilaScheda();
+        if (viewModel.listaHome().contains(medicina)) {
+            inHome = true;
+            btnAddHome.setText(R.string.rimuovi_da_home);
+        } else {
+            inHome = false;
+        }
 
         myFormat = getString(R.string.day_format);
     }
@@ -123,11 +130,15 @@ public class SchedaFragment extends Fragment {
     }
 
     private void clickListeners() {
-        btnAddHome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO: aggiunge a lista home
+        btnAddHome.setOnClickListener(v -> {
+            if (!inHome) {
+                viewModel.AddToHome(mPos);
+                btnAddHome.setText(R.string.rimuovi_da_home);
+            } else {
+                viewModel.RemoveFromHome(medicina);
+                btnAddHome.setText(R.string.add_to_home);
             }
+            ((MainActivity)requireActivity()).SalvaHome();
         });
 
         btnEdit.setOnClickListener(v -> {

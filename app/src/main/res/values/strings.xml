@@ -62,4 +62,5 @@
     <string name="home_vuota">No shortcuts added</string>
     <string name="avviso_reset_armadietto">If you confirm this operation, all medicines saved in your locker will be deleted. The process is irreversible</string>
     <string name="avviso_reset_archivio">If you confirm this operation the archive will be reset. The process is irreversible</string>
+    <string name="rimuovi_da_home">REMOVE FROM HOME</string>
 </resources>

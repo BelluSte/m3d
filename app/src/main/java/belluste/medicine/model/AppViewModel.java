@@ -4,15 +4,17 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 
-public class ArmadiettoViewModel extends ViewModel {
+public class AppViewModel extends ViewModel {
 
     private final MutableLiveData<LinkedList<Medicina>> contenutoAttivi = new MutableLiveData<>();
 
     private Armadietto armadietto;
     private Archivio archivio;
+    private ArrayList<Medicina> shortcutHome;
 
     public void SetContenutoArmadietto(Armadietto armadietto) {
         contenutoAttivi.setValue(armadietto.getContenuto());
@@ -21,6 +23,10 @@ public class ArmadiettoViewModel extends ViewModel {
 
     public void SetContenutoArchivio(Archivio archivio) {
         this.archivio = archivio;
+    }
+
+    public void SetShortcutHome(ArrayList<Medicina> shortcutHome) {
+        this.shortcutHome = shortcutHome;
     }
 
     public void MedicinaAggiunta() {
@@ -37,6 +43,10 @@ public class ArmadiettoViewModel extends ViewModel {
 
     public LinkedList<MedArchiviata> listaArchiviati() {
         return archivio.getContenuto();
+    }
+
+    public ArrayList<Medicina> listaHome() {
+        return shortcutHome;
     }
 
     public Medicina getMedicina(int posizione) {
@@ -70,5 +80,13 @@ public class ArmadiettoViewModel extends ViewModel {
 
     public void SvuotaArchivio() {
         archivio.removeAll();
+    }
+
+    public void AddToHome(int pos) {
+        shortcutHome.add(armadietto.getContenuto().get(pos));
+    }
+
+    public void RemoveFromHome(Medicina medicina) {
+        shortcutHome.remove(medicina);
     }
 }

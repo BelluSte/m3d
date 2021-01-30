@@ -15,16 +15,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import belluste.medicine.model.Archivio;
 import belluste.medicine.model.Armadietto;
-import belluste.medicine.model.ArmadiettoViewModel;
+import belluste.medicine.model.AppViewModel;
 import belluste.medicine.model.MedArchiviata;
 import belluste.medicine.model.Medicina;
 
@@ -35,13 +37,15 @@ public class MainActivity extends AppCompatActivity {
     public static final String PREF = "belluste.medicine.preferences";
     public static final String ARMADIETTO = "belluste.medicine.armadietto";
     public static final String ARCHIVIO = "belluste.medicine.archivio";
+    public static final String HOME = "belluste.medicine.home";
     public static final int REQUEST_CODE = 1;
 
     private FragmentManager fragmentManager;
-    private ArmadiettoViewModel viewModel;
+    private AppViewModel viewModel;
     private SharedPreferences preferences;
     private Armadietto armadietto;
     private Archivio archivio;
+    private ArrayList<Medicina> shortcutHome;
     private Gson gson;
     private boolean doubleBack;
     private int selected;
@@ -54,9 +58,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         fragmentManager = getSupportFragmentManager();
-        viewModel = new ViewModelProvider(this).get(ArmadiettoViewModel.class);
+        viewModel = new ViewModelProvider(this).get(AppViewModel.class);
         preferences = getSharedPreferences(PREF, MODE_PRIVATE);
         gson = new Gson();
+
+        MobileAds.initialize(this, initializationStatus -> {
+        });
 
         initUI();
 
@@ -97,6 +104,16 @@ public class MainActivity extends AppCompatActivity {
             archivio = new Archivio();
         }
         viewModel.SetContenutoArchivio(archivio);
+
+        //recupera home
+        String homeString = preferences.getString(HOME, null);
+        if (homeString != null) {
+            Type collectionType = new TypeToken<ArrayList<Medicina>>(){}.getType();
+            shortcutHome = new ArrayList<>(gson.fromJson(homeString, collectionType));
+        } else {
+            shortcutHome = new ArrayList<>();
+        }
+        viewModel.SetShortcutHome(shortcutHome);
     }
 
     @Override
@@ -176,6 +193,12 @@ public class MainActivity extends AppCompatActivity {
         String daSalvare = gson.toJson(archivio.getContenuto());
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(ARCHIVIO, daSalvare).apply();
+    }
+
+    public void SalvaHome() {
+        String daSalvare = gson.toJson(shortcutHome);
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(HOME, daSalvare).apply();
     }
 
     public void InHome() {

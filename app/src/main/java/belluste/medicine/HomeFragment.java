@@ -5,6 +5,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -12,8 +14,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
+import belluste.medicine.model.AppViewModel;
+import belluste.medicine.model.HomeListAdapter;
+
 
 public class HomeFragment extends Fragment {
+
+    public static boolean salva = false;
 
     public HomeFragment() {
         super(R.layout.fragment_home);
@@ -34,10 +44,31 @@ public class HomeFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        AdView adView = view.findViewById(R.id.adView);
         TextView EmptyTV = view.findViewById(R.id.tv_empty_home);
         RecyclerView HomeRV = view.findViewById(R.id.rv_home);
-        if (HomeRV.getAdapter() != null) {
+
+        AdRequest request = new AdRequest.Builder().build();
+        adView.loadAd(request);
+
+        AppViewModel viewModel = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
+
+        HomeRV.setLayoutManager(new LinearLayoutManager(getContext()));
+        HomeListAdapter adapter = new HomeListAdapter(viewModel.listaHome());
+        HomeRV.setAdapter(adapter);
+
+        if (adapter.getItemCount() > 0) {
             EmptyTV.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (salva) {
+            ((MainActivity)requireActivity()).SalvaHome();
+            ((MainActivity)requireActivity()).SalvaArmadietto();
+            salva = false;
         }
     }
 }
