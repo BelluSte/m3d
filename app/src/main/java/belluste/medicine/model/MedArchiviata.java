@@ -102,7 +102,7 @@ public class MedArchiviata implements Parcelable {
     }
 
     //comparator per ordinare per nome
-    public static Comparator<MedArchiviata> medNameComparator = (o1, o2) -> {
+    public static final Comparator<MedArchiviata> medNameComparator = (o1, o2) -> {
         String name1 = o1.getNome().toUpperCase();
         String name2 = o2.getNome().toUpperCase();
         return name1.compareTo(name2);
@@ -112,9 +112,9 @@ public class MedArchiviata implements Parcelable {
     // info delle medicine archiviate
     public static class Info implements Parcelable {
 
-        String mNote;
-        String mDataAgg;
-        String mDataArc;
+        final String mNote;
+        final String mDataAgg;
+        final String mDataArc;
 
         public Info(Medicina med, String dataArc) {
             this.mNote = med.getNote();
@@ -148,10 +148,6 @@ public class MedArchiviata implements Parcelable {
 
         public String getNote() {
             return mNote;
-        }
-
-        public void setNote(String mNote) {
-            this.mNote = mNote;
         }
 
         public String getDataAgg() {

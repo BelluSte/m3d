@@ -2,10 +2,8 @@
 <resources>
     <string name="app_name">Medicine</string>
     <string name="home">Home</string>
-    <string name="about">About</string>
     <string name="armadietto">Armadietto</string>
     <string name="archivio">Archivio</string>
-    <string name="impostazioni">Impostazioni</string>
     <string name="nessuna_medicina_in_archivio">Nessuna medicina in archivio</string>
     <string name="armadietto_delle_medicine_vuoto">Armadietto delle medicine vuoto</string>
     <string name="completa_tutti_campi">Completa correttamente tutti i campi</string>
@@ -39,7 +37,6 @@
     <string name="add_to_home">AGGIUNGI SCORCIATOIA ALLA HOME</string>
     <string name="archivia">ARCHIVIA</string>
     <string name="archiviato">ARCHIVIATO</string>
-    <string name="aggiunto_in_archivio_in_data">Aggiunto in archivio in data:</string>
     <string name="aggiunto">Aggiunto</string>
     <string name="archiviato_minuscolo">Archiviato</string>
     <string name="si">Si</string>

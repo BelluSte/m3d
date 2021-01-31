@@ -50,7 +50,7 @@ public class InfoAppFragment extends Fragment {
         resetArmadiettoBtn.setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setTitle(R.string.sei_sicuro)
-                    .setMessage(R.string.reset_armadietto)
+                    .setMessage(R.string.avviso_reset_armadietto)
                     .setCancelable(false)
                     .setNegativeButton(R.string.no, (dialog, which) -> dialog.cancel())
                     .setPositiveButton(R.string.si, (dialog, which) -> {
@@ -65,7 +65,7 @@ public class InfoAppFragment extends Fragment {
         resetArchivioBtn.setOnClickListener(v -> {
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setTitle(R.string.sei_sicuro)
-                    .setMessage(R.string.reset_archivio)
+                    .setMessage(R.string.avviso_reset_archivio)
                     .setCancelable(false)
                     .setNegativeButton(R.string.no, (dialog, which) -> dialog.cancel())
                     .setPositiveButton(R.string.si, (dialog, which) -> {

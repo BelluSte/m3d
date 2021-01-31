@@ -1,7 +1,6 @@
 package belluste.medicine;
 
 import android.annotation.SuppressLint;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -64,10 +63,8 @@ public class ArmadiettoFragment extends Fragment {
         ArmadiettoRV.setAdapter(adapter);
 
         DividerItemDecoration divider = new DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            divider.setDrawable(requireContext().getDrawable(R.drawable.divider));
-        }
         ArmadiettoRV.addItemDecoration(divider);
+
         if (viewModel.listaAttivi().size() > 0) {
             EmptyTV.setVisibility(View.GONE);
         }

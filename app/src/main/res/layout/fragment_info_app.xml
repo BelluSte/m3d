@@ -32,7 +32,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
-        <!--TODO: collegamento a privacy policy-->
         <TextView
             android:id="@+id/tv_privacy"
             android:layout_width="wrap_content"

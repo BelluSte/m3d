@@ -1,10 +1,8 @@
 <resources>
     <string name="app_name">Medicine</string>
     <string name="home">Home</string>
-    <string name="about">About</string>
     <string name="armadietto">Locker</string>
     <string name="archivio">Archive</string>
-    <string name="impostazioni">Settings</string>
     <string name="armadietto_delle_medicine_vuoto">Medicine locker is empty</string>
     <string name="nessuna_medicina_in_archivio">No medicine on archive</string>
     <string name="add_medicine" translatable="false">add medicine</string>
@@ -43,8 +41,6 @@
     <string name="add_to_home">ADD SHORTCUT TO HOME</string>
     <string name="archivia">ADD TO ARCHIVE</string>
     <string name="archiviato">ARCHIVED</string>
-    <string name="date" translatable="false">Date</string>
-    <string name="aggiunto_in_archivio_in_data">Added to archive on:</string>
     <string name="aggiunto">Added on</string>
     <string name="archiviato_minuscolo">Archived on</string>
     <string name="si">Yes</string>
@@ -55,7 +51,7 @@
     <string name="doppio_back">Press BACK key again to close the app</string>
     <string name="info_icon" translatable="false">info icon</string>
     <string name="info" translatable="false">INFO</string>
-    <string name="privacy_policy" translatable="false">privacy policy</string>
+    <string name="privacy_policy" translatable="false"><a href="https://docs.google.com/document/d/e/2PACX-1vS2WPfrbLe3qtrvZ2tOjnwUZcTeEkTZrBRIstgASD6qSVKrn27FauOjPy4dnk_l-0BCTG3KM2aWF1Dq/pub">privacy policy</a></string>
     <string name="versione_app">APP version:</string>
     <string name="reset_armadietto">DELETE ALL LOCKER</string>
     <string name="reset_archivio">DELETE ALL ARCHIVE</string>

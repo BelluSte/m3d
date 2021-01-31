@@ -129,7 +129,7 @@ public class Medicina implements Parcelable {
     }
 
     //comparator per ordinare per nome
-    public static Comparator<Medicina> medNameComparator = (o1, o2) -> {
+    public static final Comparator<Medicina> medNameComparator = (o1, o2) -> {
         String name1 = o1.getNome().toUpperCase();
         String name2 = o2.getNome().toUpperCase();
         return name1.compareTo(name2);
