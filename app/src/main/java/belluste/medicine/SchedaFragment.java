@@ -81,7 +81,7 @@ public class SchedaFragment extends Fragment {
             inHome = false;
         }
 
-        myFormat = getString(R.string.day_format);
+        myFormat = getString(R.string.data_format);
     }
 
     private void initUI(View v) {
@@ -167,7 +167,9 @@ public class SchedaFragment extends Fragment {
 
         btnOK.setOnClickListener(v -> {
             medicina.setNote(mNote.getText().toString());
+            confezioni = Integer.parseInt(mConfezioni.getText().toString());
             medicina.setConfezioni(confezioni);
+            totale = Integer.parseInt(mTotale.getText().toString());
             medicina.setTotale(totale);
             mNote.setEnabled(false);
             mConfezioni.setEnabled(false);
@@ -178,6 +180,9 @@ public class SchedaFragment extends Fragment {
             btnDelete.setVisibility(View.VISIBLE);
             btnOK.setVisibility(View.GONE);
             btnAnnulla.setVisibility(View.GONE);
+            if (totale > 0 && btnPrendi.getVisibility() == View.GONE) {
+                btnPrendi.setVisibility(View.VISIBLE);
+            }
             ((MainActivity) requireActivity()).SalvaArmadietto();
         });
 

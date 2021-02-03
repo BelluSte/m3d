@@ -21,13 +21,11 @@
     <string name="crema">Crema</string>
     <string name="sciroppo">Sciroppo</string>
     <string name="vari">Vari</string>
-    <string name="operazione_completata"> Medicina aggiunta con successo</string>
     <string name="medicina_gia_presente">Medicina già presente o in archivio</string>
     <string name="annullato">Operazione annullata</string>
     <string name="confezione_da">confezione da:</string>
     <string name="scade_il">scade il:</string>
-    <string name="dd_mm_yy">dd/mm/yy</string>
-    <string name="day_format">dd/MM/yyyy</string>
+    <string name="data_format">dd/MM/yyyy</string>
     <string name="totale">totale:</string>
     <string name="confezioni">confezioni:</string>
     <string name="quantit_presenti_nell_armadietto">Quantità presenti nell\'armadietto:</string>
@@ -51,4 +49,9 @@
     <string name="avviso_reset_armadietto">Confermando questa operazione tutte le medicine salvate nel tuo armadietto verranno eliminate. Il processo è irreversibile</string>
     <string name="avviso_reset_archivio">Confermando questa operazione l\'archivio verrà azzerato. Il processo è irreversibile</string>
     <string name="rimuovi_da_home">RIMUOVI DA HOME</string>
+    <string name="operazione_completata">Operazione effettuata con successo</string>
+    <string name="nessuna_medicina_in_scadenza">Nessuna medicina in scadenza</string>
+    <string name="in_scadenza">" è in scadenza"</string>
+    <string name="scaduto">" è scaduto"</string>
+    <string name="data_hint">dd/mm/yyyy</string>
 </resources>

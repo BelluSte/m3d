@@ -60,6 +60,7 @@ public class AppViewModel extends ViewModel {
     public void RemoveMedicina(Medicina medicina) {
         armadietto.removeMedicina(medicina);
         contenutoAttivi.setValue(armadietto.getContenuto());
+        shortcutHome.remove(medicina);
     }
 
     public void ArchiviaMedicina(Medicina medicina, String dataArc) {
@@ -76,6 +77,7 @@ public class AppViewModel extends ViewModel {
     public void SvuotaArmadietto() {
         armadietto.removeAll();
         contenutoAttivi.setValue(armadietto.getContenuto());
+        shortcutHome.clear();
     }
 
     public void SvuotaArchivio() {

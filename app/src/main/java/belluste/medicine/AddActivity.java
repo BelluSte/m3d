@@ -15,7 +15,6 @@ import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 import belluste.medicine.model.Medicina;
 
@@ -43,7 +42,7 @@ public class AddActivity extends AppCompatActivity {
         replyIntent = new Intent();
 
         myCalendar = Calendar.getInstance();
-        myFormat = getString(R.string.day_format);
+        myFormat = getString(R.string.data_format);
 
         DatePickerDialog.OnDateSetListener date = (view, year, month, dayOfMonth) -> {
             myCalendar.set(Calendar.YEAR, year);
@@ -158,7 +157,7 @@ public class AddActivity extends AppCompatActivity {
                                 }
 
                                 Date data = Calendar.getInstance().getTime();
-                                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.ITALY);
+                                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, getResources().getConfiguration().locale);
                                 String dataAgg = sdf.format(data);
                                 Medicina medicina = new Medicina(nome, tipo, confezioni, quantita, scadenza, note, dataAgg);
                                 replyIntent.putExtra(EXTRA_MEDICINA, medicina);
@@ -189,7 +188,7 @@ public class AddActivity extends AppCompatActivity {
     }
 
     private void updateLabel() {
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.ITALY);
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, getResources().getConfiguration().locale);
         etScad.setText(sdf.format(myCalendar.getTime()));
     }
 

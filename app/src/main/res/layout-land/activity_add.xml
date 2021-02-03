@@ -196,7 +196,7 @@
         android:clickable="true"
         android:editable="false"
         android:focusable="false"
-        android:hint="@string/dd_mm_yy"
+        android:hint="@string/data_hint"
         android:inputType="date"
         android:singleLine="true"
         android:textAlignment="center"

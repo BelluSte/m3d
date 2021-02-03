@@ -21,7 +21,11 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
 
 import belluste.medicine.model.Archivio;
@@ -39,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String ARCHIVIO = "belluste.medicine.archivio";
     public static final String HOME = "belluste.medicine.home";
     public static final int REQUEST_CODE = 1;
+    public static String scadenze;
 
     private FragmentManager fragmentManager;
     private AppViewModel viewModel;
@@ -114,6 +119,8 @@ public class MainActivity extends AppCompatActivity {
             shortcutHome = new ArrayList<>();
         }
         viewModel.SetShortcutHome(shortcutHome);
+
+        scadenze = ControlloScadenze();
     }
 
     @Override
@@ -227,5 +234,27 @@ public class MainActivity extends AppCompatActivity {
             archivioBtn.setBackgroundColor(getResources().getColor(R.color.teal_700));
             selected = 0;
         }
+    }
+
+    public String ControlloScadenze() {
+        SimpleDateFormat df = new SimpleDateFormat(getString(R.string.data_format), getResources().getConfiguration().locale);
+        StringBuilder sb = new StringBuilder();
+        long oggi = Calendar.getInstance(getResources().getConfiguration().locale).getTimeInMillis();
+        for (Medicina m : armadietto.getContenuto()) {
+            try {
+                Date scadenza = df.parse(m.getScadenza());
+                assert scadenza != null;
+                long diff = scadenza.getTime() - oggi;
+                if (diff <= 0) {
+                    sb.append(m.getNome()).append(" ").append(m.getTipo()).append(getString(R.string.scaduto)).append("\n");
+                } else if (diff < 2629800000L) {
+                    sb.append(m.getNome()).append(" ").append(m.getTipo()).append(getString(R.string.in_scadenza)).append("\n");
+                }
+            } catch (ParseException e) {
+                e.printStackTrace();
+                break;
+            }
+        }
+        return sb.toString();
     }
 }

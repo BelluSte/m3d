@@ -18,7 +18,6 @@
     <string name="note">Memo</string>
     <string name="annulla">Cancel</string>
     <string name="ok" translatable="false">OK</string>
-    <string name="dd_mm_yy">mm/dd/yy</string>
     <string name="compresse">Tablets</string>
     <string name="bustine">Sachets</string>
     <string name="crema">Cream</string>
@@ -31,7 +30,7 @@
     <string name="n" translatable="false">N</string>
     <string name="confezione_da">pack of</string>
     <string name="scade_il">expiration date</string>
-    <string name="day_format">MM/dd/yyyy</string>
+    <string name="data_format">MM/dd/yyyy</string>
     <string name="totale">total:</string>
     <string name="confezioni">packs:</string>
     <string name="quantit_presenti_nell_armadietto">Quantity in the locker:</string>
@@ -59,4 +58,8 @@
     <string name="avviso_reset_armadietto">If you confirm this operation, all medicines saved in your locker will be deleted. The process is irreversible</string>
     <string name="avviso_reset_archivio">If you confirm this operation the archive will be reset. The process is irreversible</string>
     <string name="rimuovi_da_home">REMOVE FROM HOME</string>
+    <string name="nessuna_medicina_in_scadenza">No expiring medicine</string>
+    <string name="in_scadenza">" is about to expire"</string>
+    <string name="scaduto">" is expired"</string>
+    <string name="data_hint">mm/dd/yyyy</string>
 </resources>

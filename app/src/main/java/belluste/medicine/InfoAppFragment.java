@@ -57,6 +57,8 @@ public class InfoAppFragment extends Fragment {
                         viewModel.SvuotaArmadietto();
                         Toast.makeText(getContext(), R.string.operazione_completata, Toast.LENGTH_LONG).show();
                         ((MainActivity)requireActivity()).SalvaArmadietto();
+                        ((MainActivity)requireActivity()).SalvaHome();
+                        MainActivity.scadenze = "";
                         dialog.dismiss();
                     });
             builder.create().show();
