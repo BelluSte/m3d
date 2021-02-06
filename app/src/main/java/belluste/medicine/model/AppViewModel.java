@@ -84,8 +84,8 @@ public class AppViewModel extends ViewModel {
         archivio.removeAll();
     }
 
-    public void AddToHome(int pos) {
-        shortcutHome.add(armadietto.getContenuto().get(pos));
+    public void AddToHome(Medicina medicina) {
+        shortcutHome.add(medicina);
     }
 
     public void RemoveFromHome(Medicina medicina) {

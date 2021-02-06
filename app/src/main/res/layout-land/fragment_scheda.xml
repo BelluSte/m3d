@@ -75,11 +75,30 @@
             android:hint="@string/nessuna_nota"
             android:inputType="textMultiLine"
             android:isScrollContainer="true"
+            android:maxLines="4"
             android:paddingStart="30dp"
             android:paddingEnd="30dp"
             android:textSize="18sp"
+            android:visibility="visible"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_scheda_note" />
+
+        <TextView
+            android:id="@+id/tv_scheda_note"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:isScrollContainer="true"
+            android:maxLines="4"
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp"
+            android:scrollbars="vertical"
+            android:text="@string/nessuna_nota"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="18sp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_scatola_da" />
 

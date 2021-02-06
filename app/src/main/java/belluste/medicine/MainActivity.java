@@ -8,9 +8,14 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -34,6 +39,7 @@ import belluste.medicine.model.AppViewModel;
 import belluste.medicine.model.MedArchiviata;
 import belluste.medicine.model.Medicina;
 
+import static android.graphics.Typeface.BOLD;
 import static belluste.medicine.AddActivity.EXTRA_MEDICINA;
 
 public class MainActivity extends AppCompatActivity {
@@ -43,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String ARCHIVIO = "belluste.medicine.archivio";
     public static final String HOME = "belluste.medicine.home";
     public static final int REQUEST_CODE = 1;
-    public static String scadenze;
+    public static SpannableStringBuilder sb;
 
     private FragmentManager fragmentManager;
     private AppViewModel viewModel;
@@ -53,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Medicina> shortcutHome;
     private Gson gson;
     private boolean doubleBack;
+    private boolean scadenzeControllate;
     private int selected;
 
     private Button homeBtn, armadiettoBtn, archivioBtn;
@@ -79,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
                     .commit();
             homeBtn.setBackgroundColor(getResources().getColor(R.color.teal_200));
             selected = 1;
+            scadenzeControllate = false;
         } else {
             selected = savedInstanceState.getInt("selected");
             if (selected == 1) {
@@ -88,6 +96,7 @@ public class MainActivity extends AppCompatActivity {
             } else if (selected == 3) {
                 archivioBtn.setBackgroundColor(getResources().getColor(R.color.teal_200));
             }
+            scadenzeControllate = savedInstanceState.getBoolean("scadenze");
         }
 
         //recupera armadietto salvato
@@ -120,23 +129,33 @@ public class MainActivity extends AppCompatActivity {
         }
         viewModel.SetShortcutHome(shortcutHome);
 
-        scadenze = ControlloScadenze();
+        if (!scadenzeControllate) {
+            ControlloScadenze();
+            scadenzeControllate = true;
+        }
     }
 
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt("selected", selected);
+        outState.putBoolean("scadenze", scadenzeControllate);
     }
 
     @Override
     public void onBackPressed() {
-        if (doubleBack) {
-            super.onBackPressed();
+        if (fragmentManager.findFragmentByTag("scheda_medicina") != null) {
+            fragmentManager.beginTransaction().replace(R.id.fragmentHost, ArmadiettoFragment.class, null, "armadietto").commit();
+        } else if (fragmentManager.findFragmentByTag("scheda_archivio") != null) {
+            fragmentManager.beginTransaction().replace(R.id.fragmentHost, ArchivioFragment.class, null, "archivio").commit();
         } else {
-            doubleBack = true;
-            Toast.makeText(this, R.string.doppio_back, Toast.LENGTH_SHORT).show();
-            new Handler(Looper.getMainLooper()).postDelayed(() -> doubleBack = false, 2000);
+            if (doubleBack) {
+                super.onBackPressed();
+            } else {
+                doubleBack = true;
+                Toast.makeText(this, R.string.doppio_back, Toast.LENGTH_SHORT).show();
+                new Handler(Looper.getMainLooper()).postDelayed(() -> doubleBack = false, 2000);
+            }
         }
     }
 
@@ -236,25 +255,32 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public String ControlloScadenze() {
+    public void ControlloScadenze() {
         SimpleDateFormat df = new SimpleDateFormat(getString(R.string.data_format), getResources().getConfiguration().locale);
-        StringBuilder sb = new StringBuilder();
+        sb = new SpannableStringBuilder();
         long oggi = Calendar.getInstance(getResources().getConfiguration().locale).getTimeInMillis();
+        int start = 0;
         for (Medicina m : armadietto.getContenuto()) {
             try {
                 Date scadenza = df.parse(m.getScadenza());
                 assert scadenza != null;
                 long diff = scadenza.getTime() - oggi;
                 if (diff <= 0) {
-                    sb.append(m.getNome()).append(" ").append(m.getTipo()).append(getString(R.string.scaduto)).append("\n");
+                    sb.append(m.getNome()).append(" ").append(m.getTipo())
+                            .setSpan(new ForegroundColorSpan(Color.RED), start, sb.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    sb.setSpan(new StyleSpan(BOLD), start, sb.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    sb.append(getString(R.string.scaduto)).append("\n");
+                    start = sb.length();
                 } else if (diff < 2629800000L) {
-                    sb.append(m.getNome()).append(" ").append(m.getTipo()).append(getString(R.string.in_scadenza)).append("\n");
+                    sb.append(m.getNome()).append(" ").append(m.getTipo())
+                            .setSpan(new StyleSpan(BOLD), start, sb.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+                    sb.append(getString(R.string.in_scadenza)).append("\n");
+                    start = sb.length();
                 }
             } catch (ParseException e) {
                 e.printStackTrace();
                 break;
             }
         }
-        return sb.toString();
     }
 }

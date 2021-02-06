@@ -23,7 +23,8 @@
         <activity android:name=".AddActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".MainActivity"
-            android:windowSoftInputMode="stateUnchanged">
+            android:windowSoftInputMode="adjustPan">
+            <!-- prima "stateUnchanged" per problema tastiera che appariva-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

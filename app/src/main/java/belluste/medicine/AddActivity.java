@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.format.DateFormat;
 import android.view.Gravity;
 import android.widget.Button;
 import android.widget.EditText;
@@ -188,8 +189,9 @@ public class AddActivity extends AppCompatActivity {
     }
 
     private void updateLabel() {
+        java.text.DateFormat df = DateFormat.getDateFormat(this);
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, getResources().getConfiguration().locale);
-        etScad.setText(sdf.format(myCalendar.getTime()));
+        etScad.setText(df.format(myCalendar.getTime()));
     }
 
     private void incompleto() {

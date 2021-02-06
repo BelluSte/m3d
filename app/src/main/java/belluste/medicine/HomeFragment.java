@@ -61,8 +61,8 @@ public class HomeFragment extends Fragment {
             EmptyTV.setVisibility(View.GONE);
         }
 
-        if (MainActivity.scadenze.length() > 0) {
-            HomeAlert.setText(MainActivity.scadenze);
+        if (MainActivity.sb.length() > 0) {
+            HomeAlert.setText(MainActivity.sb, TextView.BufferType.SPANNABLE);
         }
     }
 

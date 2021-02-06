@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,8 +35,8 @@ public class SchedaFragment extends Fragment {
     private String myFormat;
     private boolean inHome;
 
-    private TextView mNome, mTipo, mQuantita, mScadenza, mTestoQuant, mTestoTot;
-    private EditText mNote, mConfezioni, mTotale;
+    private TextView mNome, mTipo, mQuantita, mScadenza, mTestoQuant, mTestoTot, mNoteTV;
+    private EditText mNoteET, mConfezioni, mTotale;
     private Button btnAddHome, btnEdit, btnDelete, btnPrendi, btnArchivia, btnOK, btnAnnulla;
 
     public SchedaFragment() {
@@ -89,7 +90,7 @@ public class SchedaFragment extends Fragment {
         mTipo = v.findViewById(R.id.tv_scheda_tipo);
         mQuantita = v.findViewById(R.id.tv_scheda_quantita);
         mScadenza = v.findViewById(R.id.tv_scheda_scadenza);
-        mNote = v.findViewById(R.id.et_scheda_note);
+        mNoteET = v.findViewById(R.id.et_scheda_note);
         mConfezioni = v.findViewById(R.id.et_scheda_confezioni);
         mTotale = v.findViewById(R.id.ed_scheda_totale);
         btnAddHome = v.findViewById(R.id.btn_add_home);
@@ -101,6 +102,8 @@ public class SchedaFragment extends Fragment {
         btnArchivia = v.findViewById(R.id.btn_archivia);
         btnOK = v.findViewById(R.id.btn_scheda_ok);
         btnAnnulla = v.findViewById(R.id.btn_scheda_annulla);
+        mNoteTV = v.findViewById(R.id.tv_scheda_note);
+        mNoteTV.setMovementMethod(new ScrollingMovementMethod());
     }
 
     private void compilaScheda() {
@@ -123,7 +126,9 @@ public class SchedaFragment extends Fragment {
         }
         mScadenza.setText(medicina.getScadenza());
         if (medicina.getNote().length() > 0) {
-            mNote.setText(medicina.getNote());
+            mNoteTV.setVisibility(View.VISIBLE);
+            mNoteET.setVisibility(View.GONE);
+            mNoteTV.setText(medicina.getNote());
         }
         confezioni = medicina.getConfezioni();
         mConfezioni.setText(String.valueOf(confezioni));
@@ -132,8 +137,9 @@ public class SchedaFragment extends Fragment {
     private void clickListeners() {
         btnAddHome.setOnClickListener(v -> {
             if (!inHome) {
-                viewModel.AddToHome(mPos);
+                viewModel.AddToHome(medicina);
                 btnAddHome.setText(R.string.rimuovi_da_home);
+                inHome = true;
             } else {
                 viewModel.RemoveFromHome(medicina);
                 btnAddHome.setText(R.string.add_to_home);
@@ -142,7 +148,13 @@ public class SchedaFragment extends Fragment {
         });
 
         btnEdit.setOnClickListener(v -> {
-            mNote.setEnabled(true);
+            if (medicina.getNote().length() > 0) {
+                mNoteET.setVisibility(View.VISIBLE);
+                mNoteTV.setVisibility(View.GONE);
+                mNoteET.setText(medicina.getNote());
+            } else {
+                mNoteET.setEnabled(true);
+            }
             mConfezioni.setEnabled(true);
             mTotale.setEnabled(true);
             btnAddHome.setVisibility(View.GONE);
@@ -154,7 +166,12 @@ public class SchedaFragment extends Fragment {
         });
 
         btnAnnulla.setOnClickListener(v -> {
-            mNote.setEnabled(false);
+            if (medicina.getNote().length() > 0) {
+                mNoteET.setVisibility(View.GONE);
+                mNoteTV.setVisibility(View.VISIBLE);
+            } else {
+                mNoteET.setEnabled(false);
+            }
             mConfezioni.setEnabled(false);
             mTotale.setEnabled(false);
             btnAddHome.setVisibility(View.VISIBLE);
@@ -166,12 +183,18 @@ public class SchedaFragment extends Fragment {
         });
 
         btnOK.setOnClickListener(v -> {
-            medicina.setNote(mNote.getText().toString());
+            medicina.setNote(mNoteET.getText().toString());
             confezioni = Integer.parseInt(mConfezioni.getText().toString());
             medicina.setConfezioni(confezioni);
             totale = Integer.parseInt(mTotale.getText().toString());
             medicina.setTotale(totale);
-            mNote.setEnabled(false);
+            if (medicina.getNote().length() > 0) {
+                mNoteET.setVisibility(View.GONE);
+                mNoteTV.setVisibility(View.VISIBLE);
+                mNoteTV.setText(medicina.getNote());
+            } else {
+                mNoteET.setEnabled(false);
+            }
             mConfezioni.setEnabled(false);
             mTotale.setEnabled(false);
             btnAddHome.setVisibility(View.VISIBLE);
@@ -232,6 +255,10 @@ public class SchedaFragment extends Fragment {
     public void CancellaMedicina() {
         viewModel.RemoveMedicina(medicina);
         ((MainActivity) requireActivity()).SalvaArmadietto();
+        if (viewModel.listaHome().contains(medicina)) {
+            viewModel.RemoveFromHome(medicina);
+            ((MainActivity) requireActivity()).SalvaHome();
+        }
         getParentFragmentManager().beginTransaction().replace(R.id.fragmentHost, ArmadiettoFragment.class, null).commit();
     }
 
@@ -242,6 +269,10 @@ public class SchedaFragment extends Fragment {
         viewModel.ArchiviaMedicina(medicina, dataArc);
         ((MainActivity) requireActivity()).SalvaArmadietto();
         ((MainActivity) requireActivity()).SalvaArchivio();
+        if (viewModel.listaHome().contains(medicina)) {
+            viewModel.RemoveFromHome(medicina);
+            ((MainActivity) requireActivity()).SalvaHome();
+        }
         ((MainActivity) requireActivity()).InArchivio();
         getParentFragmentManager().beginTransaction().replace(R.id.fragmentHost, ArchivioFragment.class, null).commit();
     }

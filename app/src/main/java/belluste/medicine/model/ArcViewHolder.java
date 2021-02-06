@@ -23,7 +23,7 @@ public class ArcViewHolder extends RecyclerView.ViewHolder {
             mPosition = getAdapterPosition();
             AppCompatActivity activity = (AppCompatActivity) v.getContext();
             SchedaArchivioFragment scheda = SchedaArchivioFragment.newInstance(mPosition);
-            activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragmentHost, scheda).commit();
+            activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragmentHost, scheda, "scheda_archivio").commit();
         });
         tvNome = itemView.findViewById(R.id.tv_item_nome);
         tvTipo = itemView.findViewById(R.id.tv_item_tipo);

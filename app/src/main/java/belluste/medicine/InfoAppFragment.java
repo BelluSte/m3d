@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,6 +45,8 @@ public class InfoAppFragment extends Fragment {
         TextView versioneTv = view.findViewById(R.id.tv_version);
         Button resetArmadiettoBtn = view.findViewById(R.id.btn_reset_armadietto);
         Button resetArchivioBtn = view.findViewById(R.id.btn_reset_archivio);
+        TextView privacy = view.findViewById(R.id.tv_privacy);
+        privacy.setMovementMethod(LinkMovementMethod.getInstance());
 
         AppViewModel viewModel = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
 
@@ -58,7 +61,7 @@ public class InfoAppFragment extends Fragment {
                         Toast.makeText(getContext(), R.string.operazione_completata, Toast.LENGTH_LONG).show();
                         ((MainActivity)requireActivity()).SalvaArmadietto();
                         ((MainActivity)requireActivity()).SalvaHome();
-                        MainActivity.scadenze = "";
+                        MainActivity.sb.clear();
                         dialog.dismiss();
                     });
             builder.create().show();

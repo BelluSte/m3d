@@ -15,7 +15,7 @@
         android:paddingBottom="5dp"
         android:text="@string/nome"
         android:textAlignment="viewStart"
-        android:textSize="22sp" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/tv_item_tipo"
@@ -25,6 +25,6 @@
         android:padding="5dp"
         android:text="@string/tipo_di_medicina"
         android:textAlignment="viewStart"
-        android:textSize="22sp" />
+        android:textSize="18sp" />
 
 </LinearLayout>
