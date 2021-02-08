@@ -13,7 +13,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -31,7 +30,6 @@ public class AddActivity extends AppCompatActivity {
     private boolean quantVer;
     private Intent replyIntent;
     private int t = -1;
-    private String myFormat;
 
 
     @Override
@@ -43,7 +41,6 @@ public class AddActivity extends AppCompatActivity {
         replyIntent = new Intent();
 
         myCalendar = Calendar.getInstance();
-        myFormat = getString(R.string.data_format);
 
         DatePickerDialog.OnDateSetListener date = (view, year, month, dayOfMonth) -> {
             myCalendar.set(Calendar.YEAR, year);
@@ -158,9 +155,9 @@ public class AddActivity extends AppCompatActivity {
                                 }
 
                                 Date data = Calendar.getInstance().getTime();
-                                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, getResources().getConfiguration().locale);
-                                String dataAgg = sdf.format(data);
-                                Medicina medicina = new Medicina(nome, tipo, confezioni, quantita, scadenza, note, dataAgg);
+                                java.text.DateFormat df = DateFormat.getDateFormat(this);
+                                String dataAgg = df.format(data);
+                                Medicina medicina = new Medicina(nome.trim(), tipo, confezioni, quantita, scadenza, note, dataAgg);
                                 replyIntent.putExtra(EXTRA_MEDICINA, medicina);
                                 setResult(RESULT_OK, replyIntent);
                                 finish();
@@ -190,7 +187,6 @@ public class AddActivity extends AppCompatActivity {
 
     private void updateLabel() {
         java.text.DateFormat df = DateFormat.getDateFormat(this);
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, getResources().getConfiguration().locale);
         etScad.setText(df.format(myCalendar.getTime()));
     }
 
@@ -199,6 +195,5 @@ public class AddActivity extends AppCompatActivity {
         toast.setGravity(Gravity.TOP, 0, 0);
         toast.show();
     }
-
 
 }

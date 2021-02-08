@@ -30,7 +30,6 @@
     <string name="n" translatable="false">N</string>
     <string name="confezione_da">pack of</string>
     <string name="scade_il">expiration date</string>
-    <string name="data_format">MM/dd/yyyy</string>
     <string name="totale">total:</string>
     <string name="confezioni">packs:</string>
     <string name="quantit_presenti_nell_armadietto">Quantity in the locker:</string>
@@ -61,5 +60,5 @@
     <string name="nessuna_medicina_in_scadenza">No expiring medicine</string>
     <string name="in_scadenza">" is about to expire"</string>
     <string name="scaduto">" is expired"</string>
-    <string name="data_hint">mm/dd/yyyy</string>
+    <string name="data_hint">date</string>
 </resources>

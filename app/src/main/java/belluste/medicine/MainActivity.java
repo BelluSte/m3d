@@ -1,11 +1,5 @@
 package belluste.medicine;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -14,11 +8,18 @@ import android.os.Handler;
 import android.os.Looper;
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;
+import android.text.format.DateFormat;
 import android.text.style.ForegroundColorSpan;
 import android.text.style.StyleSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -27,14 +28,11 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 
-import belluste.medicine.model.Archivio;
-import belluste.medicine.model.Armadietto;
 import belluste.medicine.model.AppViewModel;
 import belluste.medicine.model.MedArchiviata;
 import belluste.medicine.model.Medicina;
@@ -54,9 +52,6 @@ public class MainActivity extends AppCompatActivity {
     private FragmentManager fragmentManager;
     private AppViewModel viewModel;
     private SharedPreferences preferences;
-    private Armadietto armadietto;
-    private Archivio archivio;
-    private ArrayList<Medicina> shortcutHome;
     private Gson gson;
     private boolean doubleBack;
     private boolean scadenzeControllate;
@@ -101,33 +96,36 @@ public class MainActivity extends AppCompatActivity {
 
         //recupera armadietto salvato
         String armadiettoString = preferences.getString(ARMADIETTO, null);
+        LinkedList<Medicina> armadietto;
         if (armadiettoString != null) {
             Type collectionType = new TypeToken<LinkedList<Medicina>>(){}.getType();
-            armadietto = new Armadietto(gson.fromJson(armadiettoString, collectionType));
+            armadietto = new LinkedList<>(gson.fromJson(armadiettoString, collectionType));
         } else {
-            armadietto = new Armadietto();
+            armadietto = new LinkedList<>();
         }
         viewModel.SetContenutoArmadietto(armadietto);
 
         //recupera archivio salvato
         String archivioString = preferences.getString(ARCHIVIO, null);
+        LinkedList<MedArchiviata> archivio;
         if (archivioString != null) {
             Type collectionType = new TypeToken<LinkedList<MedArchiviata>>(){}.getType();
-            archivio = new Archivio(gson.fromJson(archivioString, collectionType));
+            archivio = new LinkedList<>(gson.fromJson(archivioString, collectionType));
         } else {
-            archivio = new Archivio();
+            archivio = new LinkedList<>();
         }
         viewModel.SetContenutoArchivio(archivio);
 
         //recupera home
         String homeString = preferences.getString(HOME, null);
+        ArrayList<Integer> home;
         if (homeString != null) {
-            Type collectionType = new TypeToken<ArrayList<Medicina>>(){}.getType();
-            shortcutHome = new ArrayList<>(gson.fromJson(homeString, collectionType));
+            Type collectionType = new TypeToken<ArrayList<Integer>>(){}.getType();
+            home = new ArrayList<>(gson.fromJson(homeString, collectionType));
         } else {
-            shortcutHome = new ArrayList<>();
+            home = new ArrayList<>();
         }
-        viewModel.SetShortcutHome(shortcutHome);
+        viewModel.SetShortcutHome(home);
 
         if (!scadenzeControllate) {
             ControlloScadenze();
@@ -197,9 +195,9 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode==REQUEST_CODE && resultCode==RESULT_OK && data!=null) {
             Medicina medicina = data.getParcelableExtra(EXTRA_MEDICINA);
-            if(armadietto.addMedicina(medicina)) {
+            if(viewModel.AddMedicina(medicina)) {
                 Toast.makeText(this, R.string.operazione_completata, Toast.LENGTH_LONG).show();
-                viewModel.MedicinaAggiunta();
+                viewModel.AggiornaArmadietto();
                 SalvaArmadietto();
             } else {
                 Toast.makeText(this, R.string.medicina_gia_presente, Toast.LENGTH_LONG).show();
@@ -210,19 +208,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void SalvaArmadietto() {
-        String daSalvare = gson.toJson(armadietto.getContenuto());
+        String daSalvare = gson.toJson(viewModel.listaAttivi());
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(ARMADIETTO, daSalvare).apply();
     }
 
     public void SalvaArchivio() {
-        String daSalvare = gson.toJson(archivio.getContenuto());
+        String daSalvare = gson.toJson(viewModel.listaArchiviati());
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(ARCHIVIO, daSalvare).apply();
     }
 
     public void SalvaHome() {
-        String daSalvare = gson.toJson(shortcutHome);
+        String daSalvare = gson.toJson(viewModel.listaIndexHome());
         SharedPreferences.Editor editor = preferences.edit();
         editor.putString(HOME, daSalvare).apply();
     }
@@ -256,11 +254,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void ControlloScadenze() {
-        SimpleDateFormat df = new SimpleDateFormat(getString(R.string.data_format), getResources().getConfiguration().locale);
+        java.text.DateFormat df = DateFormat.getDateFormat(this);
         sb = new SpannableStringBuilder();
         long oggi = Calendar.getInstance(getResources().getConfiguration().locale).getTimeInMillis();
         int start = 0;
-        for (Medicina m : armadietto.getContenuto()) {
+        for (Medicina m : viewModel.listaAttivi()) {
             try {
                 Date scadenza = df.parse(m.getScadenza());
                 assert scadenza != null;

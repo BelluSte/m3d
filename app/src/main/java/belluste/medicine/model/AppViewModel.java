@@ -14,22 +14,22 @@ public class AppViewModel extends ViewModel {
 
     private Armadietto armadietto;
     private Archivio archivio;
-    private ArrayList<Medicina> shortcutHome;
+    private ArrayList<Integer> listaIndexHome;
 
-    public void SetContenutoArmadietto(Armadietto armadietto) {
-        contenutoAttivi.setValue(armadietto.getContenuto());
-        this.armadietto = armadietto;
+    public void SetContenutoArmadietto(LinkedList<Medicina> armadiettoSalvato) {
+        this.armadietto = new Armadietto(armadiettoSalvato);
+        AggiornaArmadietto();
     }
 
-    public void SetContenutoArchivio(Archivio archivio) {
-        this.archivio = archivio;
+    public void SetContenutoArchivio(LinkedList<MedArchiviata> archivioSalvato) {
+        this.archivio = new Archivio(archivioSalvato);
     }
 
-    public void SetShortcutHome(ArrayList<Medicina> shortcutHome) {
-        this.shortcutHome = shortcutHome;
+    public void SetShortcutHome(ArrayList<Integer> home) {
+        this.listaIndexHome = new ArrayList<>(home);
     }
 
-    public void MedicinaAggiunta() {
+    public void AggiornaArmadietto() {
         contenutoAttivi.setValue(armadietto.getContenuto());
     }
 
@@ -45,8 +45,8 @@ public class AppViewModel extends ViewModel {
         return archivio.getContenuto();
     }
 
-    public ArrayList<Medicina> listaHome() {
-        return shortcutHome;
+    public ArrayList<Integer> listaIndexHome() {
+        return listaIndexHome;
     }
 
     public Medicina getMedicina(int posizione) {
@@ -57,16 +57,23 @@ public class AppViewModel extends ViewModel {
         return archivio.getContenuto().get(posizione);
     }
 
+    public boolean AddMedicina(Medicina medicina) {
+        boolean result = armadietto.addMedicina(medicina);
+        if (result) {
+            AggiornaArmadietto();
+        }
+        return result;
+    }
+
     public void RemoveMedicina(Medicina medicina) {
         armadietto.removeMedicina(medicina);
-        contenutoAttivi.setValue(armadietto.getContenuto());
-        shortcutHome.remove(medicina);
+        AggiornaArmadietto();
     }
 
     public void ArchiviaMedicina(Medicina medicina, String dataArc) {
         MedArchiviata med = new MedArchiviata(medicina, dataArc);
-        armadietto.removeMedicina(medicina);
-        contenutoAttivi.setValue(armadietto.getContenuto());
+        RemoveMedicina(medicina);
+        AggiornaArmadietto();
         archivio.addMed(med);
     }
 
@@ -76,19 +83,19 @@ public class AppViewModel extends ViewModel {
 
     public void SvuotaArmadietto() {
         armadietto.removeAll();
-        contenutoAttivi.setValue(armadietto.getContenuto());
-        shortcutHome.clear();
+        listaIndexHome.clear();
+        AggiornaArmadietto();
     }
 
     public void SvuotaArchivio() {
         archivio.removeAll();
     }
 
-    public void AddToHome(Medicina medicina) {
-        shortcutHome.add(medicina);
+    public void AddToHome(int posizione) {
+        listaIndexHome.add(posizione);
     }
 
-    public void RemoveFromHome(Medicina medicina) {
-        shortcutHome.remove(medicina);
+    public void RemoveFromHome(int posizione) {
+        listaIndexHome.remove(Integer.valueOf(posizione));
     }
 }

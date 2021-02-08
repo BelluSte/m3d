@@ -8,10 +8,6 @@ public class Armadietto {
 
     private final LinkedList<Medicina> contenuto;
 
-    public Armadietto() {
-        this.contenuto = new LinkedList<>();
-    }
-
     public Armadietto(LinkedList<Medicina> lista) {
         this.contenuto = new LinkedList<>(lista);
     }

@@ -54,7 +54,7 @@ public class HomeFragment extends Fragment {
         AppViewModel viewModel = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
 
         HomeRV.setLayoutManager(new LinearLayoutManager(getContext()));
-        HomeListAdapter adapter = new HomeListAdapter(viewModel.listaHome());
+        HomeListAdapter adapter = new HomeListAdapter(viewModel.listaIndexHome(), viewModel.listaAttivi());
         HomeRV.setAdapter(adapter);
 
         if (adapter.getItemCount() > 0) {

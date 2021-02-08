@@ -6,15 +6,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import static belluste.medicine.HomeFragment.salva;
 
 
 public class HomeListAdapter extends RecyclerView.Adapter<HomeViewHolder> {
 
-    private final ArrayList<Medicina> lista;
+    private final LinkedList<Medicina> lista;
+    private final ArrayList<Integer> posizioni;
 
-    public HomeListAdapter(ArrayList<Medicina> lista) {
+    public HomeListAdapter(ArrayList<Integer> posizioni, LinkedList<Medicina> lista) {
+        this.posizioni = posizioni;
         this.lista = lista;
     }
 
@@ -26,15 +29,14 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull HomeViewHolder holder, int position) {
-        holder.tvNome.setText(lista.get(position).getNome());
-        holder.tvTot.setText(String.valueOf(lista.get(position).getTotale()));
-        holder.tvTipo.setText(lista.get(position).getTipo());
+        holder.tvNome.setText(lista.get(posizioni.get(position)).getNome());
+        holder.tvTot.setText(String.valueOf(lista.get(posizioni.get(position)).getTotale()));
+        holder.tvTipo.setText(lista.get(posizioni.get(position)).getTipo());
         holder.btnPrendi.setOnClickListener(v -> {
-            Medicina medicina = lista.get(position);
-            int totale = medicina.getTotale();
+            int totale = lista.get(posizioni.get(position)).getTotale();
             if (totale != 0) {
                 totale--;
-                medicina.setTotale(totale);
+                lista.get(posizioni.get(position)).setTotale(totale);
                 holder.tvTot.setText(String.valueOf(totale));
                 if (!salva) {
                     salva = true;
@@ -45,7 +47,7 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeViewHolder> {
 
     @Override
     public int getItemCount() {
-        return lista.size();
+        return posizioni.size();
     }
 
 }

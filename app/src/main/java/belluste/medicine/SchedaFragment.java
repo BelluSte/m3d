@@ -2,12 +2,7 @@ package belluste.medicine;
 
 import android.app.AlertDialog;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-
+import android.text.format.DateFormat;
 import android.text.method.ScrollingMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,10 +11,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import java.text.SimpleDateFormat;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 import belluste.medicine.model.AppViewModel;
 import belluste.medicine.model.Medicina;
@@ -32,7 +30,6 @@ public class SchedaFragment extends Fragment {
     private int mPos, totale, confezioni;
     private AppViewModel viewModel;
     private Medicina medicina;
-    private String myFormat;
     private boolean inHome;
 
     private TextView mNome, mTipo, mQuantita, mScadenza, mTestoQuant, mTestoTot, mNoteTV;
@@ -75,14 +72,13 @@ public class SchedaFragment extends Fragment {
         medicina = viewModel.getMedicina(mPos);
 
         compilaScheda();
-        if (viewModel.listaHome().contains(medicina)) {
+        if (viewModel.listaIndexHome().contains(mPos)) {
             inHome = true;
             btnAddHome.setText(R.string.rimuovi_da_home);
         } else {
             inHome = false;
         }
 
-        myFormat = getString(R.string.data_format);
     }
 
     private void initUI(View v) {
@@ -109,9 +105,9 @@ public class SchedaFragment extends Fragment {
     private void compilaScheda() {
         mNome.setText(medicina.getNome());
         mTipo.setText(medicina.getTipo());
-        totale = medicina.getTotale();
         int quantita = medicina.getQuantita();
         if (quantita != -1) {
+            totale = medicina.getTotale();
             mQuantita.setText(String.valueOf(quantita));
             mTotale.setText(String.valueOf(totale));
             if (totale == 0) {
@@ -126,8 +122,6 @@ public class SchedaFragment extends Fragment {
         }
         mScadenza.setText(medicina.getScadenza());
         if (medicina.getNote().length() > 0) {
-            mNoteTV.setVisibility(View.VISIBLE);
-            mNoteET.setVisibility(View.GONE);
             mNoteTV.setText(medicina.getNote());
         }
         confezioni = medicina.getConfezioni();
@@ -137,26 +131,26 @@ public class SchedaFragment extends Fragment {
     private void clickListeners() {
         btnAddHome.setOnClickListener(v -> {
             if (!inHome) {
-                viewModel.AddToHome(medicina);
+                viewModel.AddToHome(mPos);
                 btnAddHome.setText(R.string.rimuovi_da_home);
                 inHome = true;
             } else {
-                viewModel.RemoveFromHome(medicina);
+                viewModel.RemoveFromHome(mPos);
                 btnAddHome.setText(R.string.add_to_home);
             }
             ((MainActivity)requireActivity()).SalvaHome();
         });
 
         btnEdit.setOnClickListener(v -> {
+            mNoteET.setVisibility(View.VISIBLE);
+            mNoteTV.setVisibility(View.GONE);
             if (medicina.getNote().length() > 0) {
-                mNoteET.setVisibility(View.VISIBLE);
-                mNoteTV.setVisibility(View.GONE);
                 mNoteET.setText(medicina.getNote());
-            } else {
-                mNoteET.setEnabled(true);
             }
             mConfezioni.setEnabled(true);
-            mTotale.setEnabled(true);
+            if (mTotale.getVisibility() == View.VISIBLE) {
+                mTotale.setEnabled(true);
+            }
             btnAddHome.setVisibility(View.GONE);
             btnArchivia.setVisibility(View.GONE);
             btnEdit.setVisibility(View.GONE);
@@ -166,14 +160,13 @@ public class SchedaFragment extends Fragment {
         });
 
         btnAnnulla.setOnClickListener(v -> {
-            if (medicina.getNote().length() > 0) {
-                mNoteET.setVisibility(View.GONE);
-                mNoteTV.setVisibility(View.VISIBLE);
-            } else {
-                mNoteET.setEnabled(false);
-            }
+            mNoteET.getText().clear();
+            mNoteET.setVisibility(View.GONE);
+            mNoteTV.setVisibility(View.VISIBLE);
             mConfezioni.setEnabled(false);
-            mTotale.setEnabled(false);
+            if (mTotale.getVisibility() == View.VISIBLE) {
+                mTotale.setEnabled(false);
+            }
             btnAddHome.setVisibility(View.VISIBLE);
             btnArchivia.setVisibility(View.VISIBLE);
             btnEdit.setVisibility(View.VISIBLE);
@@ -183,20 +176,23 @@ public class SchedaFragment extends Fragment {
         });
 
         btnOK.setOnClickListener(v -> {
-            medicina.setNote(mNoteET.getText().toString());
             confezioni = Integer.parseInt(mConfezioni.getText().toString());
             medicina.setConfezioni(confezioni);
-            totale = Integer.parseInt(mTotale.getText().toString());
-            medicina.setTotale(totale);
-            if (medicina.getNote().length() > 0) {
+            if (medicina.getQuantita() != -1) {
+                totale = Integer.parseInt(mTotale.getText().toString());
+                medicina.setTotale(totale);
+            }
+            if (!medicina.getNote().equals(mNoteET.getText().toString())) {
+                medicina.setNote(mNoteET.getText().toString());
+                mNoteET.getText().clear();
                 mNoteET.setVisibility(View.GONE);
                 mNoteTV.setVisibility(View.VISIBLE);
                 mNoteTV.setText(medicina.getNote());
-            } else {
-                mNoteET.setEnabled(false);
             }
             mConfezioni.setEnabled(false);
-            mTotale.setEnabled(false);
+            if (mTotale.getVisibility() == View.VISIBLE) {
+                mTotale.setEnabled(false);
+            }
             btnAddHome.setVisibility(View.VISIBLE);
             btnArchivia.setVisibility(View.VISIBLE);
             btnEdit.setVisibility(View.VISIBLE);
@@ -255,8 +251,8 @@ public class SchedaFragment extends Fragment {
     public void CancellaMedicina() {
         viewModel.RemoveMedicina(medicina);
         ((MainActivity) requireActivity()).SalvaArmadietto();
-        if (viewModel.listaHome().contains(medicina)) {
-            viewModel.RemoveFromHome(medicina);
+        if (viewModel.listaIndexHome().contains(mPos)) {
+            viewModel.RemoveFromHome(mPos);
             ((MainActivity) requireActivity()).SalvaHome();
         }
         getParentFragmentManager().beginTransaction().replace(R.id.fragmentHost, ArmadiettoFragment.class, null).commit();
@@ -264,13 +260,13 @@ public class SchedaFragment extends Fragment {
 
     public void ArchiviaMedicina() {
         Date data = Calendar.getInstance().getTime();
-        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.ITALY);
-        String dataArc = sdf.format(data);
+        java.text.DateFormat df = DateFormat.getDateFormat(requireContext());
+        String dataArc = df.format(data);
         viewModel.ArchiviaMedicina(medicina, dataArc);
         ((MainActivity) requireActivity()).SalvaArmadietto();
         ((MainActivity) requireActivity()).SalvaArchivio();
-        if (viewModel.listaHome().contains(medicina)) {
-            viewModel.RemoveFromHome(medicina);
+        if (viewModel.listaIndexHome().contains(mPos)) {
+            viewModel.RemoveFromHome(mPos);
             ((MainActivity) requireActivity()).SalvaHome();
         }
         ((MainActivity) requireActivity()).InArchivio();

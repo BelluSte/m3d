@@ -21,11 +21,10 @@
     <string name="crema">Crema</string>
     <string name="sciroppo">Sciroppo</string>
     <string name="vari">Vari</string>
-    <string name="medicina_gia_presente">Medicina già presente o in archivio</string>
+    <string name="medicina_gia_presente">Medicina già presente</string>
     <string name="annullato">Operazione annullata</string>
     <string name="confezione_da">confezione da:</string>
     <string name="scade_il">scade il:</string>
-    <string name="data_format">dd/MM/yyyy</string>
     <string name="totale">totale:</string>
     <string name="confezioni">confezioni:</string>
     <string name="quantit_presenti_nell_armadietto">Quantità presenti nell\'armadietto:</string>
@@ -53,5 +52,5 @@
     <string name="nessuna_medicina_in_scadenza">Nessuna medicina in scadenza</string>
     <string name="in_scadenza">" è in scadenza"</string>
     <string name="scaduto">" è scaduto"</string>
-    <string name="data_hint">dd/mm/yyyy</string>
+    <string name="data_hint">data</string>
 </resources>

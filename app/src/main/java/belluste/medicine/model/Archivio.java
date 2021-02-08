@@ -7,10 +7,6 @@ public class Archivio {
 
     private final LinkedList<MedArchiviata> contenuto;
 
-    public Archivio() {
-        this.contenuto = new LinkedList<>();
-    }
-
     public Archivio(LinkedList<MedArchiviata> lista) {
         this.contenuto = new LinkedList<>(lista);
     }
