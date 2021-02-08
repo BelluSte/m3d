@@ -24,7 +24,6 @@
     <string name="sciroppo">Syrup</string>
     <string name="vari">Others</string>
     <string name="operazione_completata">Operation successfully complete</string>
-    <string name="medicina_gia_presente">Medicine already exists</string>
     <string name="annullato">Operation canceled</string>
     <string name="tipo" translatable="false">Tipo</string>
     <string name="n" translatable="false">N</string>

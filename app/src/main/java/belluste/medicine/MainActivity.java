@@ -195,13 +195,13 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode==REQUEST_CODE && resultCode==RESULT_OK && data!=null) {
             Medicina medicina = data.getParcelableExtra(EXTRA_MEDICINA);
-            if(viewModel.AddMedicina(medicina)) {
-                Toast.makeText(this, R.string.operazione_completata, Toast.LENGTH_LONG).show();
-                viewModel.AggiornaArmadietto();
-                SalvaArmadietto();
-            } else {
-                Toast.makeText(this, R.string.medicina_gia_presente, Toast.LENGTH_LONG).show();
+            int result = viewModel.AddMedicina(medicina);
+            if(result != -1) {
+                viewModel.UnisciMedicine(medicina, result);
             }
+            Toast.makeText(this, R.string.operazione_completata, Toast.LENGTH_LONG).show();
+            viewModel.AggiornaArmadietto();
+            SalvaArmadietto();
         } else if (requestCode==REQUEST_CODE && resultCode==RESULT_CANCELED) {
             Toast.makeText(this, R.string.annullato, Toast.LENGTH_LONG).show();
         }

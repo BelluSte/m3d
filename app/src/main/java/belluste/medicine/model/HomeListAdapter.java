@@ -3,10 +3,15 @@ package belluste.medicine.model;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+
+import belluste.medicine.MainActivity;
+import belluste.medicine.R;
+import belluste.medicine.SchedaFragment;
 
 import static belluste.medicine.HomeFragment.salva;
 
@@ -42,6 +47,13 @@ public class HomeListAdapter extends RecyclerView.Adapter<HomeViewHolder> {
                     salva = true;
                 }
             }
+        });
+        holder.itemView.setOnClickListener(v -> {
+            int mPosition = posizioni.get(position);
+            AppCompatActivity activity = (AppCompatActivity) v.getContext();
+            SchedaFragment scheda = SchedaFragment.newInstance(mPosition);
+            ((MainActivity)activity).InArmadietto();
+            activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragmentHost, scheda, "scheda_medicina").commit();
         });
     }
 

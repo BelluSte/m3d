@@ -32,8 +32,8 @@ public class SchedaFragment extends Fragment {
     private Medicina medicina;
     private boolean inHome;
 
-    private TextView mNome, mTipo, mQuantita, mScadenza, mTestoQuant, mTestoTot, mNoteTV;
-    private EditText mNoteET, mConfezioni, mTotale;
+    private TextView mNome, mTipo, mQuantita, mScadenza, mTestoQuant, mTestoTot, mNoteTV, mConfezioni;
+    private EditText mNoteET, mTotale;
     private Button btnAddHome, btnEdit, btnDelete, btnPrendi, btnArchivia, btnOK, btnAnnulla;
 
     public SchedaFragment() {
@@ -87,7 +87,7 @@ public class SchedaFragment extends Fragment {
         mQuantita = v.findViewById(R.id.tv_scheda_quantita);
         mScadenza = v.findViewById(R.id.tv_scheda_scadenza);
         mNoteET = v.findViewById(R.id.et_scheda_note);
-        mConfezioni = v.findViewById(R.id.et_scheda_confezioni);
+        mConfezioni = v.findViewById(R.id.tv_scheda_confezioni);
         mTotale = v.findViewById(R.id.ed_scheda_totale);
         btnAddHome = v.findViewById(R.id.btn_add_home);
         btnEdit = v.findViewById(R.id.btn_edit);
@@ -147,7 +147,6 @@ public class SchedaFragment extends Fragment {
             if (medicina.getNote().length() > 0) {
                 mNoteET.setText(medicina.getNote());
             }
-            mConfezioni.setEnabled(true);
             if (mTotale.getVisibility() == View.VISIBLE) {
                 mTotale.setEnabled(true);
             }
@@ -163,7 +162,6 @@ public class SchedaFragment extends Fragment {
             mNoteET.getText().clear();
             mNoteET.setVisibility(View.GONE);
             mNoteTV.setVisibility(View.VISIBLE);
-            mConfezioni.setEnabled(false);
             if (mTotale.getVisibility() == View.VISIBLE) {
                 mTotale.setEnabled(false);
             }
@@ -176,8 +174,6 @@ public class SchedaFragment extends Fragment {
         });
 
         btnOK.setOnClickListener(v -> {
-            confezioni = Integer.parseInt(mConfezioni.getText().toString());
-            medicina.setConfezioni(confezioni);
             if (medicina.getQuantita() != -1) {
                 totale = Integer.parseInt(mTotale.getText().toString());
                 medicina.setTotale(totale);
@@ -189,7 +185,6 @@ public class SchedaFragment extends Fragment {
                 mNoteTV.setVisibility(View.VISIBLE);
                 mNoteTV.setText(medicina.getNote());
             }
-            mConfezioni.setEnabled(false);
             if (mTotale.getVisibility() == View.VISIBLE) {
                 mTotale.setEnabled(false);
             }
@@ -226,7 +221,7 @@ public class SchedaFragment extends Fragment {
                 mConfezioni.setText(String.valueOf(0));
                 medicina.setConfezioni(0);
             } else {
-                if (totale % medicina.getQuantita() == 0) {
+                if (totale % medicina.getQuantita() == 0 && confezioni > 0) {
                     confezioni--;
                     mConfezioni.setText(String.valueOf(confezioni));
                     medicina.setConfezioni(confezioni);

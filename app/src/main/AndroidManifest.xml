@@ -19,7 +19,7 @@
         tools:ignore="AllowBackup">
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3940256099942544~3347511713"/>
+            android:value="ca-app-pub-4697648191086764~7281849170"/>
         <activity android:name=".AddActivity"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".MainActivity"

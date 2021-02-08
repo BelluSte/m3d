@@ -16,16 +16,15 @@ public class Armadietto {
         return contenuto;
     }
 
-    public boolean addMedicina(Medicina medicina) {
-        if (contenuto.contains(medicina)) {
-            return false;
-        } else {
+    public int addMedicina(Medicina medicina) {
+        int result = contenuto.indexOf(medicina);
+        if (result == -1) {
             contenuto.add(medicina);
             if (contenuto.size() > 1) {
                 Collections.sort(contenuto, Medicina.medNameComparator);
             }
-            return true;
         }
+        return result;
     }
 
     public void removeMedicina(Medicina medicina) {

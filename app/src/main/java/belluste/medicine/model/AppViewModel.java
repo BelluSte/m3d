@@ -57,17 +57,26 @@ public class AppViewModel extends ViewModel {
         return archivio.getContenuto().get(posizione);
     }
 
-    public boolean AddMedicina(Medicina medicina) {
-        boolean result = armadietto.addMedicina(medicina);
-        if (result) {
-            AggiornaArmadietto();
-        }
-        return result;
+    public int AddMedicina(Medicina medicina) {
+        return armadietto.addMedicina(medicina);
     }
 
     public void RemoveMedicina(Medicina medicina) {
         armadietto.removeMedicina(medicina);
         AggiornaArmadietto();
+    }
+
+    public void UnisciMedicine(Medicina medicina, int posizione) {
+        Medicina origine = getMedicina(posizione);
+        origine.setConfezioni(origine.getConfezioni() + medicina.getConfezioni());
+        if (origine.getQuantita() != -1) {
+            origine.setTotale(origine.getTotale() + medicina.getTotale());
+        }
+        if (origine.getNote().length() > 0 && medicina.getNote().length() > 0) {
+            origine.setNote(origine.getNote() + "\n\n" + medicina.getNote());
+        } else if (origine.getNote().length() == 0 && medicina.getNote().length() > 0) {
+            origine.setNote(medicina.getNote());
+        }
     }
 
     public void ArchiviaMedicina(Medicina medicina, String dataArc) {

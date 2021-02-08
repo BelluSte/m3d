@@ -103,7 +103,8 @@ public class Medicina implements Parcelable {
         if (o == null || getClass() != o.getClass()) return false;
         Medicina medicina = (Medicina) o;
         return mTipo.equals(medicina.mTipo) &&
-                mNome.equals(medicina.mNome);
+                mNome.equals(medicina.mNome) &&
+                mScadenza.equals(medicina.mScadenza);
     }
 
     @Override

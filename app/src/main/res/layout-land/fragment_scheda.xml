@@ -149,9 +149,9 @@
             android:text="@string/confezioni"
             android:textSize="18sp"
             android:textStyle="italic"
-            app:layout_constraintBottom_toBottomOf="@+id/et_scheda_confezioni"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_scheda_confezioni"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/et_scheda_confezioni" />
+            app:layout_constraintTop_toTopOf="@+id/tv_scheda_confezioni" />
 
         <TextView
             android:id="@+id/tv_totale"
@@ -165,21 +165,19 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/ed_scheda_totale" />
 
-        <EditText
-            android:id="@+id/et_scheda_confezioni"
+        <TextView
+            android:id="@+id/tv_scheda_confezioni"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
+            android:layout_marginTop="8dp"
             android:autofillHints=""
             android:ems="3"
-            android:enabled="false"
-            android:inputType="number"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="20sp"
             app:layout_constraintStart_toEndOf="@+id/textView6"
-            app:layout_constraintTop_toBottomOf="@+id/textView4"
-            tools:ignore="LabelFor" />
+            app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
         <EditText
             android:id="@+id/ed_scheda_totale"
@@ -192,8 +190,8 @@
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="@+id/et_scheda_confezioni"
-            app:layout_constraintTop_toBottomOf="@+id/et_scheda_confezioni"
+            app:layout_constraintStart_toStartOf="@+id/tv_scheda_confezioni"
+            app:layout_constraintTop_toBottomOf="@+id/tv_scheda_confezioni"
             tools:ignore="LabelFor" />
 
         <Button
@@ -204,8 +202,8 @@
             app:backgroundTint="@android:color/holo_green_dark"
             app:layout_constraintBottom_toBottomOf="@+id/ed_scheda_totale"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/et_scheda_confezioni"
-            app:layout_constraintTop_toTopOf="@+id/et_scheda_confezioni" />
+            app:layout_constraintStart_toEndOf="@+id/tv_scheda_confezioni"
+            app:layout_constraintTop_toTopOf="@+id/tv_scheda_confezioni" />
 
         <Button
             android:id="@+id/btn_add_home"
