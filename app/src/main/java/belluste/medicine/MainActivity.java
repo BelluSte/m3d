@@ -163,7 +163,6 @@ public class MainActivity extends AppCompatActivity {
             if (fragmentManager.findFragmentByTag("home") == null) {
                 fragmentManager.beginTransaction().replace(R.id.fragmentHost, HomeFragment.class, null, "home").commit();
                 InHome();
-                selected = 1;
             }
         });
         armadiettoBtn = findViewById(R.id.armadiettoButton);
@@ -171,7 +170,6 @@ public class MainActivity extends AppCompatActivity {
             if (fragmentManager.findFragmentByTag("armadietto") == null) {
                 fragmentManager.beginTransaction().replace(R.id.fragmentHost, ArmadiettoFragment.class, null, "armadietto").commit();
                 InArmadietto();
-                selected = 2;
             }
         });
         archivioBtn = findViewById(R.id.archivioButton);
@@ -179,7 +177,6 @@ public class MainActivity extends AppCompatActivity {
             if (fragmentManager.findFragmentByTag("archivio") == null) {
                 fragmentManager.beginTransaction().replace(R.id.fragmentHost, ArchivioFragment.class, null, "archivio").commit();
                 InArchivio();
-                selected = 3;
             }
         });
 
@@ -202,6 +199,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, R.string.operazione_completata, Toast.LENGTH_LONG).show();
             viewModel.AggiornaArmadietto();
             SalvaArmadietto();
+            SalvaHome();
         } else if (requestCode==REQUEST_CODE && resultCode==RESULT_CANCELED) {
             Toast.makeText(this, R.string.annullato, Toast.LENGTH_LONG).show();
         }
@@ -229,18 +227,21 @@ public class MainActivity extends AppCompatActivity {
         homeBtn.setBackgroundColor(getResources().getColor(R.color.teal_200));
         armadiettoBtn.setBackgroundColor(getResources().getColor(R.color.teal_700));
         archivioBtn.setBackgroundColor(getResources().getColor(R.color.teal_700));
+        selected = 1;
     }
 
     public void InArmadietto() {
         homeBtn.setBackgroundColor(getResources().getColor(R.color.teal_700));
         armadiettoBtn.setBackgroundColor(getResources().getColor(R.color.teal_200));
         archivioBtn.setBackgroundColor(getResources().getColor(R.color.teal_700));
+        selected = 2;
     }
 
     public void InArchivio() {
         homeBtn.setBackgroundColor(getResources().getColor(R.color.teal_700));
         armadiettoBtn.setBackgroundColor(getResources().getColor(R.color.teal_700));
         archivioBtn.setBackgroundColor(getResources().getColor(R.color.teal_200));
+        selected = 3;
     }
 
     public void OpenAppInfo(View view) {

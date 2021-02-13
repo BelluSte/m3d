@@ -1,5 +1,6 @@
 package belluste.medicine;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.text.format.DateFormat;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -61,17 +63,28 @@ public class SchedaFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_scheda, container, false);
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         initUI(view);
+        ScrollView mScrollView = view.findViewById(R.id.main_scrollview);
+        mScrollView.setOnTouchListener((v, event) -> {
+            mNoteTV.getParent().requestDisallowInterceptTouchEvent(false);
+            return false;
+        });
+        mNoteTV.setOnTouchListener((v, event) -> {
+            mNoteTV.getParent().requestDisallowInterceptTouchEvent(true);
+            return false;
+        });
         clickListeners();
 
         viewModel = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
         medicina = viewModel.getMedicina(mPos);
 
         compilaScheda();
+
         if (viewModel.listaIndexHome().contains(mPos)) {
             inHome = true;
             btnAddHome.setText(R.string.rimuovi_da_home);
@@ -156,6 +169,9 @@ public class SchedaFragment extends Fragment {
             btnDelete.setVisibility(View.GONE);
             btnOK.setVisibility(View.VISIBLE);
             btnAnnulla.setVisibility(View.VISIBLE);
+            if (btnPrendi.getVisibility() == View.VISIBLE) {
+                btnPrendi.setVisibility(View.GONE);
+            }
         });
 
         btnAnnulla.setOnClickListener(v -> {
@@ -171,12 +187,18 @@ public class SchedaFragment extends Fragment {
             btnDelete.setVisibility(View.VISIBLE);
             btnOK.setVisibility(View.GONE);
             btnAnnulla.setVisibility(View.GONE);
+            if (medicina.getQuantita() != -1) {
+                btnPrendi.setVisibility(View.VISIBLE);
+            }
         });
 
         btnOK.setOnClickListener(v -> {
             if (medicina.getQuantita() != -1) {
                 totale = Integer.parseInt(mTotale.getText().toString());
                 medicina.setTotale(totale);
+                confezioni = (totale / medicina.getQuantita()) + 1;
+                medicina.setConfezioni(confezioni);
+                mConfezioni.setText(String.valueOf(confezioni));
             }
             if (!medicina.getNote().equals(mNoteET.getText().toString())) {
                 medicina.setNote(mNoteET.getText().toString());
@@ -194,7 +216,7 @@ public class SchedaFragment extends Fragment {
             btnDelete.setVisibility(View.VISIBLE);
             btnOK.setVisibility(View.GONE);
             btnAnnulla.setVisibility(View.GONE);
-            if (totale > 0 && btnPrendi.getVisibility() == View.GONE) {
+            if (totale > 0 && medicina.getQuantita() != -1) {
                 btnPrendi.setVisibility(View.VISIBLE);
             }
             ((MainActivity) requireActivity()).SalvaArmadietto();
@@ -221,7 +243,7 @@ public class SchedaFragment extends Fragment {
                 mConfezioni.setText(String.valueOf(0));
                 medicina.setConfezioni(0);
             } else {
-                if (totale % medicina.getQuantita() == 0 && confezioni > 0) {
+                if (totale % medicina.getQuantita() == 0 && confezioni > 1) {
                     confezioni--;
                     mConfezioni.setText(String.valueOf(confezioni));
                     medicina.setConfezioni(confezioni);

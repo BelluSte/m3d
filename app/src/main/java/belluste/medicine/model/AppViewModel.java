@@ -58,7 +58,17 @@ public class AppViewModel extends ViewModel {
     }
 
     public int AddMedicina(Medicina medicina) {
-        return armadietto.addMedicina(medicina);
+        int result = armadietto.addMedicina(medicina);
+        if (result == -1) {
+            int pos = armadietto.getContenuto().indexOf(medicina);
+            for (int i=0; i<listaIndexHome.size(); i++) {
+                int value = listaIndexHome.get(i);
+                if (value >= pos) {
+                    listaIndexHome.set(i, value+1);
+                }
+            }
+        }
+        return result;
     }
 
     public void RemoveMedicina(Medicina medicina) {
