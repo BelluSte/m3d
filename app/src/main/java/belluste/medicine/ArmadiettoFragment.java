@@ -57,6 +57,9 @@ public class ArmadiettoFragment extends Fragment {
         final Observer<LinkedList<Medicina>> observer = lista -> {
             adapter.submitList(null);
             adapter.submitList(lista);
+            if (EmptyTV.getVisibility() == View.VISIBLE && viewModel.listaAttivi().size() > 0) {
+                EmptyTV.setVisibility(View.GONE);
+            }
         };
         viewModel.getAttivi().observe(getViewLifecycleOwner(), observer);
 

@@ -192,7 +192,7 @@ public class AddActivity extends AppCompatActivity {
 
     private void incompleto() {
         Toast toast = Toast.makeText(this, R.string.completa_tutti_campi, Toast.LENGTH_LONG);
-        toast.setGravity(Gravity.TOP, 0, 0);
+        toast.setGravity(Gravity.CENTER, 0, 0);
         toast.show();
     }
 
